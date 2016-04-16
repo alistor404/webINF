@@ -1,0 +1,49 @@
+/* header部分css */
+.header_message_icon{
+	float: right;
+    margin-right: .4rem;
+    font-size: 1.4rem;
+    position:relative;
+	}
+.header_message_icon p{
+	font-size: .7rem;
+    position: absolute;
+    top: -.2rem;
+    left: 0.5rem;
+    color: #BD1A1A;
+    font-weight: bolder;
+}
+.header_search_input{
+	color:#CECDCD;
+	border: 0 !important;
+    background-color: #292980 !important;
+    border-bottom: 1px solid gray !important;
+    border-radius: 0 !important;
+}
+.row div{
+	min-height: 1px
+}
+.color_292980{
+	background-color: #292980;
+	color:gray;
+}
+.color_292980 label{
+	color:white !important;
+}
+.header_nav{
+	background-color: #F8F3F3;
+	margin-bottom:.5rem;
+	height:2rem;
+}
+.header_nav div{
+	position:relative;
+}
+.header_nav img{
+	position:relative;
+	height:1.5rem;
+	width:auto;
+	margin-left:-0.75rem;
+	margin-top:-.75rem;
+	top:.8rem;
+	left:50%;
+}

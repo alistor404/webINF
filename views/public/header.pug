@@ -1,0 +1,30 @@
+doctype
+html
+	head
+		mate(charset="utf-8")
+		meta(name="viewport",content="height = device-height,width = device-width ,initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+		title #{title}
+		include static
+	body
+		.row.color_292980
+			.col-5
+			.col-80
+				.searchbar
+					a.searchbar-cancel.button.button-fill.button-success 搜寻
+					div.search-input
+						label.icon.icon-search(for="search")
+						input.header_search_input(type="search",id='search',placeholder='输入关键字...')
+			.col-15
+				span.icon.icon-message.header_message_icon
+					p 1
+		.row.header_nav
+			.col-25
+				img(src='icon/home.png')
+			.col-25
+				img(src='icon/news.png')
+			.col-25
+				img(src='icon/love.png')
+			.col-25
+				img(src='icon/tools.png')
+		block content
+	
