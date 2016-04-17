@@ -6,25 +6,26 @@ html
 		title #{title}
 		include static
 	body
-		.row.color_292980
-			.col-5
-			.col-80
-				.searchbar
-					a.searchbar-cancel.button.button-fill.button-success 搜寻
-					div.search-input
-						label.icon.icon-search(for="search")
-						input.header_search_input(type="search",id='search',placeholder='输入关键字...')
-			.col-15
-				span.icon.icon-message.header_message_icon
-					p 1
-		.row.header_nav
-			.col-25
-				img(src='icon/home.png')
-			.col-25
-				img(src='icon/news.png')
-			.col-25
-				img(src='icon/love.png')
-			.col-25
-				img(src='icon/tools.png')
-		block content
+		.content
+			.row.color_292980
+				.col-5
+				.col-80
+					.searchbar
+						a.searchbar-cancel.button.button-fill.button-success 搜寻
+						div.search-input
+							label.icon.icon-search(for="search")
+							input.header_search_input(type="search",id='search',placeholder='输入关键字...')
+				.col-15
+					span.icon.icon-message.header_message_icon
+						p 1
+			.row.header_nav.buttons-tab
+				a.tab-link.button.active(href="#tab1")
+					img(src='icon/home.png')
+				a.tab-link.button(href="#tab2")
+					img(src='icon/news_gray.png')
+				a.tab-link.button(href="#tab3")
+					img(src='icon/love_gray.png')
+				a.tab-link.button(href="#tab4")
+					img(src='icon/tool_gray.png')
+			block content
 	
