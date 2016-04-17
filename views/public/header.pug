@@ -6,7 +6,7 @@ html
 		title #{title}
 		include static
 	body
-		.content
+		.content.native-scroll
 			.row.color_292980
 				.col-5
 				.col-80
@@ -16,8 +16,31 @@ html
 							label.icon.icon-search(for="search")
 							input.header_search_input(type="search",id='search',placeholder='输入关键字...')
 				.col-15
-					span.icon.icon-message.header_message_icon
+					span.icon.icon-message.header_message_icon.open-panel(data-panel='#panel-right')
 						p 1
+			.panel-overlay
+			.panel.panel-right.panel-cover.theme-dark(id='panel-right')
+				.content-block
+					p 这是一个侧栏
+					p 你可以在这里放用户消息页面
+					p
+						a.close-panel(href="#") 关闭
+				.list-block
+					.card
+						.card-header 新的消息
+						.card-content
+							.list-block.media-list
+								ul
+									li.item-content
+										.item-media
+											img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="44")
+										.item-inner
+											.item-title-now
+												.item-title 回复：好哦好哦
+											.item-subtitle 来自:今天一起去玩吧
+						.card-footer
+							span 2016.4.16
+							span 来自：张三
 			.row.header_nav.buttons-tab
 				a.tab-link.button.active(href="#tab1")
 					img(src='icon/home.png')
@@ -28,4 +51,3 @@ html
 				a.tab-link.button(href="#tab4")
 					img(src='icon/tool_gray.png')
 			block content
-	
