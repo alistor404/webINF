@@ -1,22 +1,19 @@
 extends public/header
 
 block content
-	.content-block
-		.tabs
-			.tab.active(id="tab1")
-				.content-block
-					p This is tab 1 content
-					// include /pages/tab1
-			.tab(id="tab2")
-				.content-block
-					p This is tab 2 content
-					// include /pages/tab2
-			.tab(id="tab3")
-				.content-block
-					p This is tab 3 content
-					// include /pages/tab3
-			.tab(id="tab4")
-				.content-block
-					p This is tab 4 content
-					// include /pages/tab4
+	.tabs
+		.tab.active(id="tab1")
+			include ../views/pages/tab1.pug
+		.tab(id="tab2")
+			.content-block
+				p This is tab 2 content
+				// include /pages/tab2
+		.tab(id="tab3")
+			.content-block
+				p This is tab 3 content
+				// include /pages/tab3
+		.tab(id="tab4")
+			.content-block
+				p This is tab 4 content
+				// include /pages/tab4
 	

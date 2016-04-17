@@ -31,7 +31,7 @@
 	color:white !important;
 }
 .header_nav{
-	background-color: #F8F3F3;
+	background-color: white;
 	margin-bottom:.5rem;
 	height:2rem;
 	margin-left:0;
@@ -43,4 +43,9 @@
 }
 .header_nav .active{
 	border:0;
+}
+
+/*tab1*/
+.append_talks,.append_commit{
+	position:fixed !important;
 }
