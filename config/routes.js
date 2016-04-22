@@ -5,11 +5,9 @@ var User=require("../mongoose_db/Model/user.js")
 module.exports= function(app){
 
 	app.use(function(req,res,next){
-		console.log(req.originalUrl)
 		if(!req.session.user && !req.originalUrl.match('/login')){
 			res.redirect('/login')
 		}
-		console.log(req.session.user)
 		next()
 	})
 	
