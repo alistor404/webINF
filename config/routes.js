@@ -119,6 +119,61 @@ module.exports= function(app){
 				}
 			})
 		}
+
+		if(req.body.logintype=='forgetpassword'){
+			User.findOne({username:_username},function(err,userdetail){
+				if(err){
+					console.log(err)
+				}
+				if(!userdetail){
+					res.send({loginStatus:'4',msg:"用户名没有注册"})
+				}else{
+					if(userdetail.phonenum==_phonenum){
+						var checknum=alidayu(_phonenum);
+						req.session.checknum=checknum;
+						res.send({loginStatus:'1',msg:"已发送验证码"})
+					}else{
+						res.send({loginStatus:'8',msg:"手机号码与账号不匹配"})
+					}
+				}
+			})
+		}
+
+		if(req.body.logintype=='forgetcheck'){
+			User.findOne({username:_username},function(err,userdetail){
+				if(err){
+					console.log(err)
+				}
+				if(!userdetail){
+					res.send({loginStatus:'4',msg:"用户名没有注册"})
+				}else{
+					if(userdetail.phonenum==_phonenum){
+						if(req.session.checknum=_checknum){
+							req.session.user=_username
+							res.send({loginStatus:'9',msg:"校验通过"})
+						}else{
+							res.send({loginStatus:'3',msg:"验证码输入不正确"})
+						}
+					}else{
+						res.send({loginStatus:'8',msg:"手机号码与账号不匹配"})
+					}
+				}
+			})
+		}
+
+		if(req.body.logintype=='password'){
+			if(req.session.user){
+				User.findOne({username:req.session.user},function(err,userdetail){
+					userdetail.password=_password;
+					userdetail.save(function(err){
+						if(err){console.log(err),res.end()}
+						res.send({loginStatus:'11',msg:"重置成功，3S后跳转首页"})
+					});
+				})
+			}else{
+				res.send({loginStatus:'10',msg:"糟糕，发生意外了"})
+			}
+		}
 	})
 
 

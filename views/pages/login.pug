@@ -102,36 +102,69 @@ html
 						.col-90
 							a#but2(href="#" class="button button-big button-fill button-success") 注册
 						.col-5
-			.popup(style="background: #eeeeee;")
+			.popup#tab3(style="background: #eeeeee;")
 				a.close-popup 返回登录
-				.list-block
-						ul
-							li
+				.form_box#pop1
+					.list-block
+							ul
+								li
+									.item-content
+										.item-media
+											i.icon.icon-form-name
+										.item-inner
+											.item-title.label 用户名:
+											.item-input
+												input(type="text" name="username" placeholder="请输入用户名")
+								li
+									.item-content
+										.item-media
+											i.icon.icon-form-name
+										.item-inner
+											.item-title.label 手&nbsp;&nbsp;&nbsp;机:
+											.item-input
+												input(type="text" name="phonenum" placeholder="请输入手机号码")
+								li
+									.item-content
+										.item-media
+											i.icon.icon-form-name
+										.item-inner
+											input.item-title.btn.btn_checkout#but4(value='获取验证码',type="button")
+											.item-input
+												input(type="text" name="checkcode" placeholder="请输入收到的验证码")
+					.row.login_errormsg
+							.col-10
+							.col-90
+								p
+					.row
+						.col-5
+						.col-90
+							a#but5(href="#" class="button button-big button-fill button-success") 校验
+						.col-5
+				.form_box#pop2(style="display:none")
+					.list-block
+							ul
+								li
 								.item-content
 									.item-media
 										i.icon.icon-form-name
 									.item-inner
-										.item-title.label 用户名:
+										.item-title.label 密&nbsp;&nbsp;&nbsp;码:
 										.item-input
-											input(type="text" name="username" placeholder="请输入用户名")
-							li
-								.item-content
-									.item-media
-										i.icon.icon-form-name
-									.item-inner
-										.item-title.label 手&nbsp;&nbsp;&nbsp;机:
-										.item-input
-											input(type="text" name="phonenum" placeholder="请输入手机号码")
-							li
-								.item-content
-									.item-media
-										i.icon.icon-form-name
-									.item-inner
-										input.item-title.btn.btn_checkout(value='获取验证码',type="button")
-										.item-input
-											input(type="text" name="checkcode" placeholder="请输入收到的验证码")
-				.row
-					.col-5
-					.col-90
-						a#but2(href="#" class="button button-big button-fill button-success") 校验
-					.col-5
+											input(type="password" name="password" placeholder="请输入密码")
+								li
+									.item-content
+										.item-media
+											i.icon.icon-form-name
+										.item-inner
+											.item-title.label 重复密码:
+											.item-input
+												input(type="password" name="reppassword" placeholder="请重复输入密码")
+					.row.login_errormsg
+							.col-10
+							.col-90
+								p
+					.row
+						.col-5
+						.col-90
+							a#but6(href="#" class="button button-big button-fill button-success") 重置
+						.col-5
