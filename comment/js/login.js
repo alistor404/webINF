@@ -60,7 +60,7 @@ $(function(){
 					if(ret.loginStatus=="2"){
 						$("#tab2 .login_errormsg p").text(ret.msg);
 						setTimeout(function(){
-							window.localtion.href='/index';
+							location.href='/index';	
 						},2000)
 						
 					}else{
