@@ -44,6 +44,35 @@
 .header_nav .active{
 	border:0;
 }
+/*/login/*/
+.login_errormsg{
+	position: relative;
+    top: -2rem;
+    color:red;
+    height: 2rem;
+}
+.login_tabs{
+	font-size:.7rem;
+}
+.login_tabs .item-inner{
+	margin-left:0 !important;
+}
+.login_tabs .item-title.label{
+	font-size:.6rem;
+	width:20%;
+}
+.btn_checkout{
+	font-size:.6rem;
+	width: 40%;
+    height: 2rem;
+}
+.login_forget{
+	margin-top:1rem;
+}
+.login_forget a{
+	float: right;
+	margin-right:1rem;
+}
 
 /*tab1*/
 .append_talks,.append_commit{
