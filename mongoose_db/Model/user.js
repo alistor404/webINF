@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var UserSchema = require('../schema/user.js')
+var UserSchema = require('../Schema/user.js')
 var UserModel = mongoose.model('User',UserSchema);
 
 
