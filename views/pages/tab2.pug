@@ -1,1 +1,14 @@
-tab2.pug
+each item in content
+  a(href="#{item.href}")
+    .card.demo-card-header-pic
+      .card-header.color-white.no-border.no-padding(valign="bottom")
+        img.card-cover(src="#{item.src}")
+      .card-content
+        .card-content-inner
+          h3 #{item.title}
+          p.color-gray 发表于 #{item.time}
+        .card-footer
+          a.link(href="#") 赞
+          a.link(href="#") 更多
+.infinite-scroll-preloader
+  .preloader

@@ -1,4 +1,5 @@
 var User=require("../mongoose_db/Model/user.js")
+var sina=require("../mongoose_db/Model/sinaSport.js")
 
 
 
@@ -14,10 +15,32 @@ module.exports= function(app){
 
 	//index
 	app.get('/index',function(req,res){
-	 res.render('index',{
-			title:'main',
-			// User.username,
-			header:'It working!!!'
+		//page2初始内容拉取5个新闻
+		
+		sina.find({}).sort({'_id':-1}).limit(5).exec(function(err,sina){
+			if(err){
+				console.log(err)
+			}else{
+				var newsCont=[];
+				for(var i=0;i<5;i++){
+					var news={
+						title:'',
+						src:'',
+						href:'',
+						time:''
+					}
+					news.title=sina[i].title;
+					news.src=sina[i].src;
+					news.href="/user/"+sina[i]._id;
+					news.time=sina[i].createTime;
+					newsCont.push(news);
+				}
+				console.log(newsCont)
+				res.render('index',{
+					title:req.session.user,
+					content:newsCont
+				})
+			}
 		})
 	})
 
@@ -175,6 +198,9 @@ module.exports= function(app){
 			}
 		}
 	})
+
+	//page2
+	// app.get()
 
 
 }

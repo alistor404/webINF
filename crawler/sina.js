@@ -27,7 +27,7 @@ function htmlChapters(html){
 			var _href=chapters.eq(i).attr('href')
 			var _title=chapters.eq(i).find('img').attr('alt')
 			console.log(_title)
-			var _src=chapters.eq(i).find('img').attr('src')
+			var _src=chapters.eq(i).find('img').attr('data-src')
 			var sina=new Sina({
 				title:_title,
 				href:_href,
