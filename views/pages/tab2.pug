@@ -1,8 +1,8 @@
 each item in content
-  a(href="#{item.href}")
+  a(href=item.href)
     .card.demo-card-header-pic
       .card-header.color-white.no-border.no-padding(valign="bottom")
-        img.card-cover(src="#{item.src}")
+        img.card-cover(src=item.src)
       .card-content
         .card-content-inner
           h3 #{item.title}

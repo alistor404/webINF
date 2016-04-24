@@ -31,7 +31,7 @@ function htmlChapters(html){
 	}
 	var chapters=$('.j_slide');
 	for(var i in chapters){
-		var _src=chapters.eq(i).find('img').attr('src')
+		var _src=chapters.eq(i).find('img').attr('data-src')
 		var _msg=chapters.eq(i).find("img").attr('alt')
 		var _title=chapters.eq(i).find("img").attr('data-title')
 		if(_src){

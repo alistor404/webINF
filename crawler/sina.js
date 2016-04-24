@@ -37,3 +37,7 @@ function htmlChapters(html){
 		}
 	}
 }
+
+setTimeout(function(){
+	http.close(function(){ console.log('stop'); })
+},3600)
