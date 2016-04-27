@@ -1,7 +1,6 @@
 var mongoose = require('mongoose')
-var sinadetail=require("../../crawler/sinadetail.js")
 var Schema = mongoose.Schema
-
+var sinadetail=require("../../crawler/sinadetail.js")
 
 var SinaSchema = new Schema({
   title: String,
@@ -15,7 +14,7 @@ var SinaSchema = new Schema({
 
 // // var ObjectId = mongoose.Schema.Types.ObjectId
 SinaSchema.pre('save', function(next) {
-	sinadetail.sinadetail(this.href)
+	sinadetail.sinadetail(this.href,this._id)
   	next()
 })
 

@@ -1,5 +1,7 @@
 var User=require("../mongoose_db/Model/user.js")
 var sina=require("../mongoose_db/Model/sinaSport.js")
+var sinadetail=require("../mongoose_db/Model/sinadetail.js")
+
 
 
 
@@ -16,7 +18,6 @@ module.exports= function(app){
 	//index
 	app.get('/index',function(req,res){
 		//page2初始内容拉取5个新闻
-		
 		sina.find({}).sort({'_id':-1}).limit(5).exec(function(err,sina){
 			if(err){
 				console.log(err)
@@ -31,17 +32,30 @@ module.exports= function(app){
 					}
 					news.title=sina[i].title;
 					news.src=sina[i].src;
-					news.href="/user/"+sina[i]._id;
+					news.id=sina[i]._id;
 					news.time=sina[i].createTime;
 					newsCont.push(news);
-				}
-				console.log(newsCont)
+				};
 				res.render('index',{
 					title:req.session.user,
 					content:newsCont
 				})
 			}
 		})
+	})
+
+
+	//page2 news detail
+	app.get('/news/:id',function(req,res){
+		var _newsid=req.params.id;
+		var _id=_newsid.substring(1,_newsid.length-1)
+		
+		sinadetail.findOne({newsId:_id},function(err,newsdetail){
+			if(err){console.log(err)}else{
+				res.send(newsdetail);
+			}
+		})
+		
 	})
 
 	//login

@@ -21,23 +21,23 @@ var UserSchema = new Schema({
 })
 
 // // var ObjectId = mongoose.Schema.Types.ObjectId
-UserSchema.pre('save', function(next) {
+// UserSchema.pre('save', function(next) {
 
-  next()
-})
+//   next()
+// })
 
-UserSchema.statics = {
-  fetch: function(cb) {
-    return this
-      .find({})
-      .sort('meta.lastLogin')
-      .exec(cb)
-  },
-  findById: function(usname, cb) {
-    return this
-      .findOne({username: usname})
-      .exec(cb)
-  }
-}
+// UserSchema.statics = {
+//   fetch: function(cb) {
+//     return this
+//       .find({})
+//       .sort('meta.lastLogin')
+//       .exec(cb)
+//   },
+//   findById: function(usname, cb) {
+//     return this
+//       .findOne({username: usname})
+//       .exec(cb)
+//   }
+// }
 
 module.exports = UserSchema

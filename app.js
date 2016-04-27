@@ -26,6 +26,7 @@ app.set("view engine","pug") //设置视图引擎
 app.listen(port) //监听端口
 app.use(express.static('comment'));//设置静态资源位置
 
+
 require('./config/routes.js')(app);//引用route配置 传入服务
 
 console.log('this working!!')

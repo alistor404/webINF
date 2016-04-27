@@ -22,7 +22,7 @@ http.get(url,function(res){
 function htmlChapters(html){
 	var $ =cheerio.load(html)
 	var chapters=$('.swipe_pic a')
-	for(var i in chapters){
+	for(var i=chapters.length;i>=0;i--){
 		if(chapters.eq(i).find('img').attr('alt')){
 			var _href=chapters.eq(i).attr('href')
 			var _title=chapters.eq(i).find('img').attr('alt')
@@ -38,6 +38,3 @@ function htmlChapters(html){
 	}
 }
 
-setTimeout(function(){
-	http.close(function(){ console.log('stop'); })
-},3600)
