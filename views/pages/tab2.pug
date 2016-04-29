@@ -1,14 +1,15 @@
-each item in content
-  .card.demo-card-header-pic.pb-standalone-captions
-    input(type='hidden',value=item.id)
-    .card-header.color-white.no-border.no-padding(valign="bottom")
-      img.card-cover(src=item.src)
-    .card-content
-      .card-content-inner
-        h3 #{item.title}
-        p.color-gray 发表于 #{item.time}
-      .card-footer
-        a.link(href="#") 赞
-        a.link(href="#") 更多
+.card_group
+  each item in content
+    .card.demo-card-header-pic.pb-standalone-captions.tap2_card
+      input(type='hidden',value=item.id)
+      .card-header.color-white.no-border.no-padding(valign="bottom")
+        img.card-cover(src=item.src)
+      .card-content
+        .card-content-inner
+          h3 #{item.title}
+          p.color-gray 发表于 #{item.time}
+        .card-footer
+          a.link(href="#") 赞
+          a.link(href="#") 更多
 .infinite-scroll-preloader
   .preloader

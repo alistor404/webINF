@@ -1,13 +1,89 @@
 extends public/header
 
 block content
-	.tabs
-		.tab.active(id="tab1")
-			include ../views/pages/tab1.pug
-		.tab(id="tab2")
-			include ../views/pages/tab2.pug
-		.tab(id="tab3")
-				// include ../views/pages/tab3.pug
-		.tab(id="tab4")
-				// include ../views/pages/tab4.pug
-	
+  .header.bar-nav
+    div
+      .row.color_292980
+        .col-5
+        .col-80
+          .searchbar
+            a.searchbar-cancel.button.button-fill.button-success 搜寻
+            div.search-input
+              label.icon.icon-search(for="search")
+              input.header_search_input(type="search",id='search',name="username",placeholder='输入关键字...')
+        .col-15
+          span.icon.icon-message.header_message_icon.open-panel(data-panel='#panel-right')
+            p 1
+      .row.header_nav.buttons-tab
+        a.button.active(href="#tab1")
+          img(src='icon/home.png')
+        a.button(href="#tab2")
+          img(src='icon/news_gray.png')
+        a.button(href="#tab3")
+          img(src='icon/love_gray.png')
+        a.button(href="#tab4")
+          img(src='icon/tool_gray.png')
+  .page-group
+    .page(id='tab1').content.page-current
+      .card
+        .card-content.open-popup(data-popup=".append_commit")
+          span.icon.icon-edit
+          p 发表心情
+      .card.demo-card-header-pic
+        .card-header.color-white.no-border.no-padding(valign="bottom")
+          img.card-cover(src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg")
+        .card-content
+          .card-content-inner
+              p.color-gray 发表于 2015/01/15
+              p 此处是内容...
+          .card-footer
+            a.link(href="#") 赞
+            a.link(href="#") 更多
+      .card.facebook-card
+        .card-header.no-border
+          .facebook-avatar
+            img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34")
+          .facebook-name 夜萧
+          .facebook-date 星期一 3:47pm
+        .card-content
+          img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="100%")
+        .card-footer.no-border
+          a.link(href="#") 赞
+          a.open-popup(href="#",data-popup=".append_talks") 评论
+          a.link(href="#") 分享
+    .page.infinite-scroll.content(data-distance="50",id="tab2")
+          include ./pages/tab2.pug
+    .page(id="tab3")
+        // include ./views/pages/tab3.pug
+    .page(id="tab4")
+        // include ./views/pages/tab4.pug
+  .popup.append_talks
+    .content-block
+      p.close-popup Close popup1
+  .popup.append_commit
+    .content-block
+      p.close-popup Close popup2
+  .panel-overlay
+  .panel.panel-right.panel-cover.theme-dark(id='panel-right')
+    .content-block
+      p 这是一个侧栏
+      p 你可以在这里放用户消息页面
+      p
+        a.close-panel(href="#") 关闭
+    .list-block
+      .card
+        .card-header 新的消息
+        .card-content
+          .list-block.media-list
+            ul
+              li.item-content
+                .item-media
+                  img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="44")
+                .item-inner
+                  .item-title-now
+                    .item-title 回复：好哦好哦
+                  .item-subtitle 来自:今天一起去玩吧
+        .card-footer
+          span 2016.4.16
+          span 来自：张三
+  script(src='js/tab2.js')

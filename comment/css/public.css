@@ -1,3 +1,4 @@
+
 /* header部分css */
 .header_message_icon{
 	float: right;
@@ -77,4 +78,16 @@
 /*tab1*/
 .append_talks,.append_commit{
 	position:fixed !important;
+}
+
+
+
+.page-group{
+	top: 4.2rem;
+	height: 86% !important;
+}
+
+.page{
+	overflow: auto !important;
+
 }

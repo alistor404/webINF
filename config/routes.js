@@ -14,34 +14,66 @@ module.exports= function(app){
 		next()
 	})
 	
+	app.get('/',function(req,res){
+		res.redirect('/index');
+	})
 
 	//index
 	app.get('/index',function(req,res){
+		if(!req.query.Index ){
 		//page2初始内容拉取5个新闻
-		sina.find({}).sort({'_id':-1}).limit(5).exec(function(err,sina){
-			if(err){
-				console.log(err)
-			}else{
-				var newsCont=[];
-				for(var i=0;i<5;i++){
-					var news={
-						title:'',
-						src:'',
-						href:'',
-						time:''
-					}
-					news.title=sina[i].title;
-					news.src=sina[i].src;
-					news.id=sina[i]._id;
-					news.time=sina[i].createTime;
-					newsCont.push(news);
-				};
-				res.render('index',{
-					title:req.session.user,
-					content:newsCont
-				})
-			}
-		})
+			sina.find({}).sort({'_id':-1}).limit(5).exec(function(err,sina){
+				if(err){
+					console.log(err)
+				}else{
+					var newsCont=[];
+					for(var i=0;i<5;i++){
+						var news={
+							title:'',
+							src:'',
+							href:'',
+							time:''
+						}
+						news.title=sina[i].title;
+						news.src=sina[i].src;
+						news.id=sina[i]._id;
+						news.time=sina[i].createTime;
+						newsCont.push(news);
+					};
+					res.render('index',{
+						title:req.session.user,
+						content:newsCont
+					})
+				}
+			})
+		}else{
+			var lastindex=parseInt(req.query.Index);
+			var newsCont=[];
+			sina.find({}).sort({'_id':-1}).limit(lastindex+5).exec(function(err,sinas){
+				if(err){
+					console.log(err)
+				}else{
+					
+					for(var i=lastindex;i<lastindex+5;i++){
+						var news={
+							title:'',
+							src:'',
+							href:'',
+							time:''
+						}
+						news.href=sinas[i].href;
+						news.title=sinas[i].title;
+						news.src=sinas[i].src;
+						news.id=sinas[i]._id;
+						news.time=sinas[i].createTime;
+						newsCont.push(news);
+						
+					};
+					console.log(newsCont)
+					res.send(newsCont)
+				}
+			})
+		}
 	})
 
 
