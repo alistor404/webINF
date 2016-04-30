@@ -1,4 +1,6 @@
-
+.page_fixed{
+	position:fixed;
+}
 /* header部分css */
 .header_message_icon{
 	float: right;
@@ -129,7 +131,7 @@
 	margin:auto;
 }
 
-
+/*tab2*/
 .page-group{
 	top: 4.2rem;
 	height: 86% !important;
@@ -138,4 +140,31 @@
 .page{
 	overflow: auto !important;
 
+}
+
+/*tab4*/
+.my_header_pic img{
+    border-radius: 50%;
+    width: 30% !important;
+    margin: 1rem 35% .5rem;
+}
+
+.my_header_pic .porsen_name{
+	margin-top: 0;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.my_header_pic .list-block{
+    border-top: .2rem solid #eeeeee;
+}
+
+.my_header_pic .list-block .item-content a{
+	padding-left: 5rem
+}
+#tab4 .card{
+    margin: 0.5rem 0 0 0;
+}
+#tab4 .card-header{
+	/*background: url('../icon/header_bg.png')*/
 }

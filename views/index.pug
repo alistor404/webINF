@@ -58,6 +58,14 @@ block content
       include ./pages/tab3.pug
     .page(id="tab4")
       include ./pages/tab4.pug
+    .page.page_fixed(id='Mydetail')
+      include ./pages/Mydetail.pug
+    .page.page_fixed(id='Myactive')
+      include ./pages/Myactive.pug
+    .page.page_fixed(id='Mypicture')
+      include ./pages/Mypicture.pug
+    .page.page_fixed(id='Myfriend')
+      include ./pages/Myfriend.pug
   .popup.append_talks
     .content-block
       p.close-popup Close popup1
@@ -68,10 +76,11 @@ block content
       button.button.pull-right 发表
     .content
       textarea.talkabout_textarea(placeholder='今天又运动了')
-      label(for='inputMypic')
-        span.icon.icon-picture
-      input(name='inputFile', type='file', multiple='mutiple',id='inputMypic',style="display:none")
       #localImag.row
+        .col-33.imgBOX 
+          label(for='inputMypic')
+            span.icon.icon-picture
+          input(type='file', multiple='mutiple',id='inputMypic',style="display:none")
     script(src='js/talkabout.js')
   .panel-overlay
   .panel.panel-right.panel-cover.theme-dark(id='panel-right')

@@ -1,23 +1,39 @@
 JQ(function(){
 
-    var imgArray=[];
+    // var imgArray=[];
 
-    JQ('.append_commit #inputMypic').change(function(){
-        setImagePreview()
-    })
-	function setImagePreview() {
-        var localImag=document.getElementById("localImag");
+    function eventlenth(){
+        JQ('.append_commit #localImag input').change(function(){
+            console.log(1)
+            setImagePreview($(this))
+        })
+    }
+    eventlenth();
+	function setImagePreview(thisIndex) {
         var docObj=document.getElementById("inputMypic");
         if(window.URL.createObjectURL(docObj.files[0])){
-            imgArray.push(docObj.value);
-            var imgBOX=document.createElement("div");
-            imgBOX.className='col-33 imgBOX create-actions';
-            var img = new Image(); img.src = window.URL.createObjectURL(docObj.files[0]);
-            imgBOX.style.backgroundImage ="url("+img.src+")";
-            imgBOX.style.backgroundSize='100% 100%'
-            localImag.appendChild(imgBOX);
+            var time=new Date();
+            var oldlabel=thisIndex.siblings('label').eq(0);
+            var img = new Image();
+            img.src = window.URL.createObjectURL(docObj.files[0]);
+            console.log(window.URL.createObjectURL(docObj.files[1]))
+            console.log(img.src)
+            var div='<div style="height:100%;width:100%"></div>'
+            var $append="<div class='col-33 imgBOX'><label for='"+time+"'><span class='icon icon-picture'></label><input name='"+time+"' type='file' multiple='mutiple' id='"+time+"' style='display:none' /></div>"
+
+            // thisIndex.attr('id','');
+            // thisIndex.attr('name','pic'+time);
+            oldlabel.attr('for','#');
+            oldlabel.empty();
+            oldlabel.addClass('create-actions');
+            oldlabel.append(div);
+            oldlabel.find('div').css({'backgroundImage':"url("+img.src+")",'backgroundSize':'100% 100%'});
+            
+            $('#localImag').append($append);
             $('.imgBOX').height($('.imgBOX').width())
-            docObj.value='';
+
+
+            eventlenth()
         }else{
             return false;
         }
@@ -25,13 +41,13 @@ JQ(function(){
 
     $(document).on('click','.create-actions', function () {
       var img=$(this);
-      var Index;
-      var imgs=document.getElementsByClassName("imgBOX");
-      for(var i=0;i<imgs.length;i++){
-        if(this==imgs[i]){
-            Index=i;
-        }
-      }
+      // var Index;
+      // var imgs=document.getElementsByClassName("imgBOX");
+      // for(var i=0;i<imgs.length;i++){
+      //   if(this==imgs[i]){
+      //       Index=i;
+      //   }
+      // }
       var buttons1 = [
         {
           text: '请选择',
@@ -42,8 +58,7 @@ JQ(function(){
           bold: true,
           color: 'danger',
           onClick: function() {
-            img.remove();
-            delete imgArray[Index];
+            img.parent().remove();
           }
         }
       ];
