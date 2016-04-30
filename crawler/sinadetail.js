@@ -22,14 +22,11 @@ var sinadetail={
 
 
 function htmlChapters(html,_newsId){
-	// var _newsId=String(_newsId)
-	// console.log(_newsId)
-	// console.log(typeof(_newsId))
 	var $ =cheerio.load(html)
 	var _maintitle=$('title').text();
 	var _sinadetail={
 		maintitle:_maintitle,
-		newsId:_newsId,//这个ID值塞不进去
+		newsId:_newsId,
 		title:[],
 		msg:[],
 		src:[]
