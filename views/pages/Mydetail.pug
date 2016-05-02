@@ -2,5 +2,76 @@ header.bar.bar-nav
 	h1.title 个人资料
 	a(href="#tab4")
 		button.button.pull-left 取消
-	button.button.pull-right 修改
+	button.button.pull-right#mydetailup 修改
 .content
+	.list-block
+		ul
+			li
+				.item-content
+					.item-media
+						span.icon.icon-me
+					.item-inner
+						.item-title.label 昵称
+						.item-input
+							input(type="text",name='nicename',value=user.nicename)
+			li
+				.item-content
+					.item-media
+						span.icon.icon-card
+					.item-inner
+						.item-title.label 用户名
+						.item-input
+							font #{user.username}
+			li
+				.item-content
+					.item-media
+						span.icon.icon-share
+					.item-inner
+						.item-title.label 性别
+						.item-input
+							if user.sexy
+								select(name='sexy')
+									option(selected='selected',value='true') 男生
+									option(value='false') 女生
+							else
+								select(name='sexy')
+									option(value='true') 男生
+									option(selected='selected',value='false') 女生
+			li
+				.item-content
+					.item-media
+						span.icon.icon-gift
+					.item-inner
+						.item-title.label 生日
+						.item-input
+							input#dateChoose(type="text",name="brithday",value=user.brithday)
+			li
+				.item-content
+					.item-media
+						span.icon.icon-phone
+					.item-inner
+						.item-title.label 电话
+						.item-input
+							font #{user.phonenum}
+			li
+				.item-content
+					.item-media
+						span.icon.icon-edit
+					.item-inner
+						.item-title.label 签名
+						.item-input
+							textarea(name='sign') #{user.sign}
+			li
+				.item-content
+					.item-media
+						span.icon.icon-settings
+					.item-inner
+						.item-title.label 允许查看
+						.item-input
+							label.label-switch
+								if user.visible
+									input(type="checkbox",name='visible',checked,value='true')
+									.checkbox()
+								else
+									input(type="checkbox",name='visible',value='true')
+									.checkbox()

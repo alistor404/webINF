@@ -6,7 +6,26 @@ var UserSchema = new Schema({
   username: String,
   password: String,
   phonenum: String,
-  sexy: Boolean,
+  brithday:{
+    type:String,
+    default:''
+  },
+  nicename: {
+      type:String,
+      default:this.username
+  },
+  sexy: {
+      type:Boolean,
+      default:true
+  },
+  sign:{
+      type:String,
+      default:''
+  },
+  visible:{
+      type:Boolean,
+      default:true
+  },
   hot: Number,
   meta:{
   	createUser:{
@@ -21,10 +40,12 @@ var UserSchema = new Schema({
 })
 
 // // var ObjectId = mongoose.Schema.Types.ObjectId
-// UserSchema.pre('save', function(next) {
-
-//   next()
-// })
+UserSchema.pre('save', function(next) {
+  if(!this.nicename){
+    this.nicename=this.username
+  }
+  next();
+})
 
 // UserSchema.statics = {
 //   fetch: function(cb) {

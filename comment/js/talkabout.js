@@ -1,28 +1,23 @@
 JQ(function(){
+    
 
-    // var imgArray=[];
+  function eventlenth(){
+      JQ('.append_commit #localImag input').change(function(){
+          setImagePreview(this)
+      })
+  }
 
-    function eventlenth(){
-        JQ('.append_commit #localImag input').change(function(){
-            console.log(1)
-            setImagePreview($(this))
-        })
-    }
-    eventlenth();
+  eventlenth();
+
 	function setImagePreview(thisIndex) {
-        var docObj=document.getElementById("inputMypic");
-        if(window.URL.createObjectURL(docObj.files[0])){
+        if(window.URL.createObjectURL(thisIndex.files[0])){
             var time=new Date();
-            var oldlabel=thisIndex.siblings('label').eq(0);
+            var oldlabel=$(thisIndex).siblings('label').eq(0);
             var img = new Image();
-            img.src = window.URL.createObjectURL(docObj.files[0]);
-            console.log(window.URL.createObjectURL(docObj.files[1]))
-            console.log(img.src)
+            img.src = window.URL.createObjectURL(thisIndex.files[0]);
             var div='<div style="height:100%;width:100%"></div>'
             var $append="<div class='col-33 imgBOX'><label for='"+time+"'><span class='icon icon-picture'></label><input name='"+time+"' type='file' multiple='mutiple' id='"+time+"' style='display:none' /></div>"
 
-            // thisIndex.attr('id','');
-            // thisIndex.attr('name','pic'+time);
             oldlabel.attr('for','#');
             oldlabel.empty();
             oldlabel.addClass('create-actions');
@@ -41,13 +36,6 @@ JQ(function(){
 
     $(document).on('click','.create-actions', function () {
       var img=$(this);
-      // var Index;
-      // var imgs=document.getElementsByClassName("imgBOX");
-      // for(var i=0;i<imgs.length;i++){
-      //   if(this==imgs[i]){
-      //       Index=i;
-      //   }
-      // }
       var buttons1 = [
         {
           text: '请选择',
@@ -71,5 +59,10 @@ JQ(function(){
       var groups = [buttons1, buttons2];
       $.actions(groups);
   });
+
+
+  $('#filesubmit').click(function() {
+    $('#formFile').submit();
+  })
 
 })

@@ -40,9 +40,11 @@ module.exports= function(app){
 						news.time=sina[i].createTime;
 						newsCont.push(news);
 					};
-					res.render('index',{
-						title:req.session.user,
+					User.findOne({username:req.session.user},function(err,user){
+						res.render('index',{
+						user:user,
 						content:newsCont
+						})
 					})
 				}
 			})
@@ -74,6 +76,22 @@ module.exports= function(app){
 				}
 			})
 		}
+	})
+
+	//userdetailupdate
+	app.post('/user/detail',function(req,res){
+		User.findOne({username:req.session.user},function(err,userdetail){
+			userdetail.nicename=req.body.nicename;
+			userdetail.sexy=req.body.sexy;
+			userdetail.brithday=req.body.brithday;
+			userdetail.sign=req.body.sign;
+			userdetail.visible=req.body.visible;
+			userdetail.save(function(err,detail){
+				if(err){console.log(err)}else{
+					res.send('success')
+				}
+			})
+		})
 	})
 
 

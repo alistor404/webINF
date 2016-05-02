@@ -73,14 +73,16 @@ block content
     header.bar.bar-nav
       h1.title 分享你的运动状态
       button.button.pull-left.close-popup 取消
-      button.button.pull-right 发表
+      button.button.pull-right#filesubmit 发表
     .content
-      textarea.talkabout_textarea(placeholder='今天又运动了')
-      #localImag.row
-        .col-33.imgBOX 
-          label(for='inputMypic')
-            span.icon.icon-picture
-          input(type='file', multiple='mutiple',id='inputMypic',style="display:none")
+      form#formFile(name='formFile',method="post",action="IbeaconHandler.ashx",target='frameFile',enctype="multipart/form-data")
+        textarea.talkabout_textarea(placeholder='今天又运动了')
+        #localImag.row
+          .col-33.imgBOX 
+            label(for='inputMypic')
+              span.icon.icon-picture
+            input(type='file', multiple='mutiple',id='inputMypic',style="display:none")
+      iframe#frameFile(name='frameFile',style='display: none')
     script(src='js/talkabout.js')
   .panel-overlay
   .panel.panel-right.panel-cover.theme-dark(id='panel-right')
@@ -105,4 +107,4 @@ block content
         .card-footer
           span 2016.4.16
           span 来自：张三
-  script(src='js/tab2.js')
+  script(src='js/tab.js')

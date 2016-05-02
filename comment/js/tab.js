@@ -1,5 +1,5 @@
 JQ(function(){
-
+  //tab2.pug
 	var loading = false;
       // 最多可加载的条目
       var maxItems = 50;
@@ -34,13 +34,7 @@ JQ(function(){
 	    
 	}
 
-      // 上次加载的序号
-
       var lastIndex = 5;
-
-		// $.initInfiniteScroll('#tab2');
-      // $.attachInfiniteScroll('#tab2')
-      // 注册'infinite'事件处理函数
       $('#tab2').on('infinite',function() {
           // 如果正在加载，则退出
           if (loading) return;
@@ -76,9 +70,38 @@ JQ(function(){
 
 
 
+    //mydetail.pug
+     $("#dateChoose").datetimePicker({});
 
-
-
+     $("#mydetailup").click(function(){
+        var obj={
+          nicename:'',
+          sexy:'',
+          brithday:'',
+          sign:'',
+          visible:''
+        }
+        var Input=$('#Mydetail').find('[name]');
+        for(var i=0;i<Input.length;i++){
+          obj[Input.eq(i).attr('name')]=Input.eq(i).val()
+        }
+        
+        $.showPreloader('更新中')
+        JQ.ajax({
+          url:'/user/detail',
+          type:'post',
+          data:obj,
+          success:function(ret){
+            if(ret=='success'){
+              $.hidePreloader();
+              $.toast("操作成功");
+            }else{
+              console.log(ret)
+              $.toast("操作失败");
+            }
+          }
+        })
+      })
 
 
 
