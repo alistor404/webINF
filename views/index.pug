@@ -30,23 +30,13 @@ block content
           .talkabout
             i.icon.icon-edit
             font &nbsp;&nbsp;来分享你的运动成果吧 
-      .card.demo-card-header-pic
-        .card-header.color-white.no-border.no-padding(valign="bottom")
-          img.card-cover(src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg")
-        .card-content
-          .card-content-inner
-              p.color-gray 发表于 2015/01/15
-              p 此处是内容...
-          .card-footer
-            a.link(href="#") 赞
-            a.link(href="#") 更多
       .card.facebook-card
         .card-header.no-border
           .facebook-avatar
             img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34")
           .facebook-name 夜萧
           .facebook-date 星期一 3:47pm
-        .card-content
+        .card-content.card_img_1
           img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="100%")
         .card-footer.no-border
           a.link(href="#") 赞
@@ -75,13 +65,13 @@ block content
       button.button.pull-left.close-popup 取消
       button.button.pull-right#filesubmit 发表
     .content
-      form#formFile(name='formFile',method="post",action="IbeaconHandler.ashx",target='frameFile',enctype="multipart/form-data")
-        textarea.talkabout_textarea(placeholder='今天又运动了')
+      form#formFile(name='formFile',method="post",action="/user/talkabout",target='frameFile',enctype="multipart/form-data")
+        textarea.talkabout_textarea(placeholder='今天又运动了',name='mystatus')
         #localImag.row
           .col-33.imgBOX 
             label(for='inputMypic')
               span.icon.icon-picture
-            input(type='file', multiple='mutiple',id='inputMypic',style="display:none")
+            input(type='file', multiple='mutiple',id='inputMypic',style="display:none",name='inputMypic')
       iframe#frameFile(name='frameFile',style='display: none')
     script(src='js/talkabout.js')
   .panel-overlay

@@ -85,7 +85,7 @@ JQ(function(){
         for(var i=0;i<Input.length;i++){
           obj[Input.eq(i).attr('name')]=Input.eq(i).val()
         }
-        
+
         $.showPreloader('更新中')
         JQ.ajax({
           url:'/user/detail',
@@ -103,6 +103,13 @@ JQ(function(){
         })
       })
 
+
+
+
+      //headerpic change
+      $('#headerpic').change(function(){
+        $('#headpic').submit();
+      })
 
 
 

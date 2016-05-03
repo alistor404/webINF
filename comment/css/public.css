@@ -105,6 +105,44 @@
 .append_talks,.append_commit{
 	position:fixed !important;
 }
+
+/*个人动态显示*/
+.card-content img:last-child{
+	clear: both;
+}
+.card_img_1 img{
+	height:100%;
+	width:100%;
+}
+
+.card_img_2 img{
+	width:50%;
+	height:100%;
+	float: left;
+}
+.card_img_3 img{
+	width:33%;
+	height:100%;
+	float: left;
+}
+
+.card_img_4 img{
+	width:50%;
+	height:50%;
+	float: left;
+}
+
+.card_img_6,.card_img_5 img{
+	width:33%;
+	height:50%;
+	float: left;
+}
+
+.card_img_9,.card_img_7,.card_img_8 img{
+	width:33%;
+	height:33%;
+	float: left;
+}
 /*tab1 pop*/
 .talkabout_textarea{
 	width: 100%;
@@ -115,7 +153,7 @@
     font-size: 2.5rem;
     padding: 0 1rem;
     height: 3rem;
-    line-height: 3rem;
+    	line-height: 3rem;
 }
 #localImag{
 	overflow: hidden;
@@ -168,4 +206,12 @@
 }
 #tab4 .card-header{
 	/*background: url('../icon/header_bg.png')*/
+}
+/*mydetail*/
+.porsen_headerpic {
+	height:4rem;
+}
+.porsen_headerpic img{
+    height: 4rem;
+    border-radius: 50%;
 }

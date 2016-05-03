@@ -24,7 +24,7 @@ JQ(function(){
             oldlabel.append(div);
             oldlabel.find('div').css({'backgroundImage':"url("+img.src+")",'backgroundSize':'100% 100%'});
             
-            $('#localImag').append($append);
+            $('#localImag').prepend($append);
             $('.imgBOX').height($('.imgBOX').width())
 
 

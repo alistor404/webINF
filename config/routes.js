@@ -1,7 +1,11 @@
+var formidable = require('formidable');//表单提交处理
+var dir=require('./newdirpath.js')
+var fs=require('fs')
+
 var User=require("../mongoose_db/Model/user.js")
 var sina=require("../mongoose_db/Model/sinaSport.js")
 var sinadetail=require("../mongoose_db/Model/sinadetail.js")
-
+var Talkabout=require("../mongoose_db/Model/talkabout.js")
 
 
 
@@ -71,7 +75,6 @@ module.exports= function(app){
 						newsCont.push(news);
 						
 					};
-					console.log(newsCont)
 					res.send(newsCont)
 				}
 			})
@@ -93,7 +96,73 @@ module.exports= function(app){
 			})
 		})
 	})
+	//user/talkabout
+	app.post('/user/talkabout',function(req,res){
+		dir.mkdirsSync("comment/pic/"+req.session.user+"/status");//不存在文件夹先创建
 
+		var form = new formidable.IncomingForm();   //创建上传表单
+	    form.encoding = 'utf-8';		//设置编辑
+	    form.uploadDir = 'comment/pic/'+req.session.user+"/status";	 //设置上传目录
+	    form.keepExtensions = true;	 //保留后缀
+	    // form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+	    form.parse(req, function(err, fields, files) {
+		    if (err) {
+		      console.log(err)
+		      return;		
+		    }else{
+		    	var picarray=[]
+		    	for(var i in files){
+		    		console.log(files)
+		    		if(files[i].type){
+					    var extName = '';  //后缀名
+					    switch (files[i].type) {
+					      case 'image/pjpeg':
+					        extName = 'jpg';
+					        break;
+					      case 'image/jpeg':
+					        extName = 'jpg';
+					        break;		 
+					      case 'image/png':
+					        extName = 'png';
+					        break;
+					      case 'image/x-png':
+					        extName = 'png';
+					        break;		 
+					    }
+					    if(extName.length == 0){
+					    	fs.unlink(files[i].path)
+					        res.send = '只支持png和jpg格式图片';
+					    }else{
+					    	picarray.push(files[i].path.substring(7,files[i].path.length));
+						}
+					}
+				}
+				var talkaboutobj={
+			    	text:fields.mystatus,
+			    	pic:picarray,
+			    	createTime:Date.now()
+			    }
+			    Talkabout.findOne({username:req.session.user},function(err,data){
+			    	if(err){
+			    		console.log(err);
+			    	}else{
+			    		if(!data){
+			    			var talkabout=new Talkabout({
+			    				username:req.session.user,
+			    				content:[]
+			    			})
+			    			talkabout.content.push(talkaboutobj);
+			    			talkabout.save();
+			    		}else{
+				    		data.content.push(talkaboutobj);
+				    		data.save();
+				    	}
+
+			    	}
+			    })
+		  	}
+		});
+	})
 
 	//page2 news detail
 	app.get('/news/:id',function(req,res){
@@ -106,6 +175,55 @@ module.exports= function(app){
 			}
 		})
 		
+	})
+
+
+	//headerpic change
+	app.post('/user/headerpic',function(req,res){
+		dir.mkdirsSync("comment/pic/"+req.session.user+"/headerpic");//不存在文件夹先创建
+
+		var form = new formidable.IncomingForm();   //创建上传表单
+	    form.encoding = 'utf-8';		//设置编辑
+	    form.uploadDir = 'comment/pic/'+req.session.user+"/headerpic";	 //设置上传目录
+	    form.keepExtensions = true;	 //保留后缀
+	    // form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+	    form.parse(req, function(err, fields, files) {
+		    if (err) {
+		      console.log(err)
+		      return;		
+		    }else{
+			    var extName = '';  //后缀名
+			    switch (files.headerpic.type) {
+			      case 'image/pjpeg':
+			        extName = 'jpg';
+			        break;
+			      case 'image/jpeg':
+			        extName = 'jpg';
+			        break;		 
+			      case 'image/png':
+			        extName = 'png';
+			        break;
+			      case 'image/x-png':
+			        extName = 'png';
+			        break;		 
+			    }
+			    if(extName.length == 0){
+			    	fs.unlink(files.headerpic.path)
+			        // res.send = '只支持png和jpg格式图片';
+			    }else{
+			    	User.findOne({username:req.session.user},function(err,user){
+			    		if(err){console.log(err)}else{
+			    			user.headerpic=files.headerpic.path.substring(7,files.headerpic.path.length);
+			    			user.save(function(err,nuser){
+			    				if(err){console.log(err)}else{
+			    					res.send({a:'a'})
+			    				}
+			    			})
+			    		}
+			    	})
+				}
+			}
+		});
 	})
 
 	//login

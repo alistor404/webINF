@@ -27,6 +27,10 @@ var UserSchema = new Schema({
       default:true
   },
   hot: Number,
+  headerpic:{
+    type:String,
+    default:'icon/headerpic.jpg'
+  },
   meta:{
   	createUser:{
   		type:Date,

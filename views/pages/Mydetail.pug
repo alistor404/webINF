@@ -11,6 +11,20 @@ header.bar.bar-nav
 					.item-media
 						span.icon.icon-me
 					.item-inner
+						.item-title.label 头像
+						.item-input.porsen_headerpic
+							label(for='headerpic')
+								img.card-cover(src=user.headerpic)
+							form#headpic(name='headpic',method="post",action="/user/headerpic",target='headpic',enctype="multipart/form-data")
+								input(type='file', multiple='mutiple',id='headerpic',style="display:none",name='headerpic')
+							iframe#frameFile(name='headpic',style='display: none')
+	.list-block
+		ul
+			li
+				.item-content
+					.item-media
+						span.icon.icon-me
+					.item-inner
 						.item-title.label 昵称
 						.item-input
 							input(type="text",name='nicename',value=user.nicename)
