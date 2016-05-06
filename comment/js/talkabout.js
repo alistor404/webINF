@@ -63,6 +63,10 @@ JQ(function(){
 
   $('#filesubmit').click(function() {
     $('#formFile').submit();
+    $.showPreloader('上传中')
+    setTimeout(function(){
+      location.reload()
+    },1500)
   })
 
 })

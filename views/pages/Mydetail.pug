@@ -1,6 +1,6 @@
 header.bar.bar-nav
 	h1.title 个人资料
-	a(href="#tab4")
+	a(href="JavaScript:history.go(-1)")
 		button.button.pull-left 取消
 	button.button.pull-right#mydetailup 修改
 .content
@@ -14,7 +14,7 @@ header.bar.bar-nav
 						.item-title.label 头像
 						.item-input.porsen_headerpic
 							label(for='headerpic')
-								img.card-cover(src=user.headerpic)
+								img.card-cover.myheaderpic(src=user.headerpic)
 							form#headpic(name='headpic',method="post",action="/user/headerpic",target='headpic',enctype="multipart/form-data")
 								input(type='file', multiple='mutiple',id='headerpic',style="display:none",name='headerpic')
 							iframe#frameFile(name='headpic',style='display: none')

@@ -31,6 +31,8 @@ var UserSchema = new Schema({
     type:String,
     default:'icon/headerpic.jpg'
   },
+  concems:[String],
+  fans:[String],
   meta:{
   	createUser:{
   		type:Date,
@@ -46,8 +48,10 @@ var UserSchema = new Schema({
 // // var ObjectId = mongoose.Schema.Types.ObjectId
 UserSchema.pre('save', function(next) {
   if(!this.nicename){
-    this.nicename=this.username
-  }
+    this.nicename=this.username;
+    this.concems.push(this.username);
+    this.fans.push(this.username);
+  };
   next();
 })
 

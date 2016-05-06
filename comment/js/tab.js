@@ -10,7 +10,7 @@ JQ(function(){
 	function addItems(lastIndex) {
 	      // 生成新条目的HTML
 	     JQ.ajax({
-	     	url:'',
+	     	url:'/news/newsCont',
 	     	type:'get',
 	     	data:{
 	     		Index:lastIndex
@@ -109,11 +109,38 @@ JQ(function(){
       //headerpic change
       $('#headerpic').change(function(){
         $('#headpic').submit();
+        $.toast("修改成功");
+        thisIndex=document.getElementById('headerpic');
+        console.log(window.URL.createObjectURL(thisIndex.files[0]))
+        $('.myheaderpic').attr('src',window.URL.createObjectURL(thisIndex.files[0]));
       })
 
 
 
 
+      //好友详情页
+      $('.userheader').click(function(){
+        $.popup('.userdetail')
+      })
+
+      //加好友
+      $('.append_concems').click(function(){
+        var username=$('.username').text();
+        $.ajax({
+          url:'/user/appendconcems',
+          type:'post',
+          data:{
+            username:username
+          },
+          success:function(ret){
+            if(ret.friendstatus==1){
+              $.toast("添加成功");
+            }else if(ret.friendstatus==0){
+              $.toast("已经是好友哦");
+            }
+          }
+        })
+      })
 
 
 

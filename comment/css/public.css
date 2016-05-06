@@ -107,38 +107,42 @@
 }
 
 /*个人动态显示*/
-.card-content img:last-child{
-	clear: both;
+#tab1 .card-content{
+	overflow: hidden;
+	width:100%;
 }
-.card_img_1 img{
+/*.card-content .imgbox:last-child{
+	clear: both;
+}*/
+.card_img_1 .imgbox{
 	height:100%;
 	width:100%;
 }
 
-.card_img_2 img{
+.card_img_2 .imgbox{
 	width:50%;
 	height:100%;
 	float: left;
 }
-.card_img_3 img{
+.card_img_3 .imgbox{
 	width:33%;
 	height:100%;
 	float: left;
 }
 
-.card_img_4 img{
+.card_img_4 .imgbox{
 	width:50%;
 	height:50%;
 	float: left;
 }
 
-.card_img_6,.card_img_5 img{
+.card_img_6,.card_img_5 .imgbox{
 	width:33%;
 	height:50%;
 	float: left;
 }
 
-.card_img_9,.card_img_7,.card_img_8 img{
+.card_img_9,.card_img_7,.card_img_8 .imgbox{
 	width:33%;
 	height:33%;
 	float: left;
@@ -184,8 +188,9 @@
 /*tab4*/
 .my_header_pic img{
     border-radius: 50%;
-    width: 30% !important;
-    margin: 1rem 35% .5rem;
+    width: 4rem !important;
+    height: 4rem !important;
+    margin: 1rem auto .5rem;
 }
 
 .my_header_pic .porsen_name{
@@ -213,5 +218,29 @@
 }
 .porsen_headerpic img{
     height: 4rem;
+    width:4rem;
     border-radius: 50%;
+}
+
+/*myfriends*/
+#Myfriend .content-block{
+	padding:0 !important;
+	margin:0;
+	margin-top:2.75rem;
+}
+
+
+
+/*userdetail*/
+.userdetail{
+	background-color: rebeccapurple;	
+}
+.userdetail .userheaderpic{
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    position: relative;
+    margin-left: -2rem;
+    left: 50%;
+    margin-top: 2rem;
 }

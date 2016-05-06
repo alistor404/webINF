@@ -1,6 +1,45 @@
 header.bar.bar-nav
-	h1.title 我的关注
-	a(href="#tab4")
+	h1.title 我的好友
+	a(href="JavaScript:history.go(-1)")
 		button.button.pull-left 返回
-	button.button.pull-right 整理
+	//button.button.pull-right 整理
 .content
+	.buttons-tab
+		a.tab-link.active.button(href="#myconcems") 我的关注
+		a.tab-link.button(href="#myfans") 关注我的
+	.content-block
+		.tabs
+			#myconcems.tab.active
+				.content-block
+					.bar.bar-header-secondary
+						.searchbar
+							a.searchbar-cancel 搜索
+							.search-input
+								label.icon.icon-search(for="search")
+								input(type="search",id='search',placeholder='输入关键字...')
+					.list-block
+						ul
+							li.item-content
+								.item-media
+									img.userheader(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34")
+								.item-inner
+									.item-title 张三
+									.item-after
+										span.icon.icon-right.userheader
+			#myfans.tab
+				.content-block
+					.bar.bar-header-secondary
+						.searchbar
+							a.searchbar-cancel 取消
+							.search-input
+								label.icon.icon-search(for="search")
+								input(type="search",id='search',placeholder='输入关键字...')
+					.list-block
+						ul
+							li.item-content
+								.item-media
+									img.userheader(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34")
+								.item-inner
+									.item-title 张三
+									.item-after
+										span.icon.icon-right.userheader

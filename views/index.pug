@@ -29,19 +29,27 @@ block content
         .card-content.open-popup(data-popup=".append_commit")
           .talkabout
             i.icon.icon-edit
-            font &nbsp;&nbsp;来分享你的运动成果吧 
-      .card.facebook-card
-        .card-header.no-border
-          .facebook-avatar
-            img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34")
-          .facebook-name 夜萧
-          .facebook-date 星期一 3:47pm
-        .card-content.card_img_1
-          img(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="100%")
-        .card-footer.no-border
-          a.link(href="#") 赞
-          a.open-popup(href="#",data-popup=".append_talks") 评论
-          a.link(href="#") 分享
+            font &nbsp;&nbsp;来分享你的运动成果吧
+      each status in friends.statuslist
+        each concems in friends.concems
+          if status.username==concems.username
+            .card.facebook-card
+              .card-header.no-border
+                .facebook-avatar
+                  img(src=concems.headerpic width="34" height="34")
+                .facebook-name #{concems.nicename}
+                .facebook-date #{status.content.createTime}
+              -var length=status.content.pic.length;
+              .card-content(class='card_img_'+length)
+                if(status.content.text)
+                  p &nbsp;&nbsp;#{status.content.text}
+                each pic in status.content.pic
+                  .imgbox
+                    img(src=pic width="100%")
+              .card-footer.no-border
+                a.link(href="#") 赞
+                a.open-popup(href="#",data-popup=".append_talks") 评论
+                a.link(href="#") 分享
     .page.infinite-scroll.content(data-distance="50",id="tab2")
       include ./pages/tab2.pug
     .page(id="tab3")
@@ -74,6 +82,67 @@ block content
             input(type='file', multiple='mutiple',id='inputMypic',style="display:none",name='inputMypic')
       iframe#frameFile(name='frameFile',style='display: none')
     script(src='js/talkabout.js')
+  .popup.userdetail
+    img.userheaderpic(src=user.headerpic)
+    .list-block
+      ul
+        li
+          .item-content
+            .item-media
+              span.icon.icon-me
+            .item-inner
+              .item-title.label 昵称
+              .item-input
+                font #{user.nicename}
+        li
+          .item-content
+            .item-media
+              span.icon.icon-card
+            .item-inner
+              .item-title.label 用户名
+              .item-input
+                font.username #{user.username}
+        li
+          .item-content
+            .item-media
+              span.icon.icon-share
+            .item-inner
+              .item-title.label 性别
+              .item-input
+                if user.sexy
+                  font 男生 
+                else
+                  font 女生
+        li
+          .item-content
+            .item-media
+              span.icon.icon-gift
+            .item-inner
+              .item-title.label 生日
+              .item-input
+                font #{user.brithday}
+        li
+          .item-content
+            .item-media
+              span.icon.icon-phone
+            .item-inner
+              .item-title.label 电话
+              .item-input
+                font #{user.phonenum}
+        li
+          .item-content
+            .item-media
+              span.icon.icon-edit
+            .item-inner
+              .item-title.label 签名
+              .item-input
+                font #{user.sign}
+      .content-block
+        .row
+          .col-50
+            a(href="#" class="button button-big button-fill button-success append_concems") 加为好友
+          .col-50
+            a(href="#" class="button button-big button-fill button-danger close-popup") 返回
   .panel-overlay
   .panel.panel-right.panel-cover.theme-dark(id='panel-right')
     .content-block
