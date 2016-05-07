@@ -19,13 +19,16 @@ header.bar.bar-nav
 								input(type="search",id='search',placeholder='输入关键字...')
 					.list-block
 						ul
-							li.item-content
-								.item-media
-									img.userheader(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34")
-								.item-inner
-									.item-title 张三
-									.item-after
-										span.icon.icon-right.userheader
+							for concem in friends.concems
+								li.item-content
+									.item-media
+										img.userheader(src=concem.headerpic width="34" height="34")
+										input(type='hidden' value=concem.username)
+									.item-inner
+										.item-title #{concem.nicename}
+										.item-after
+											span.icon.icon-right.userheader
+											input(type='hidden' value=concem.username)
 			#myfans.tab
 				.content-block
 					.bar.bar-header-secondary
@@ -36,10 +39,11 @@ header.bar.bar-nav
 								input(type="search",id='search',placeholder='输入关键字...')
 					.list-block
 						ul
-							li.item-content
-								.item-media
-									img.userheader(src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34")
-								.item-inner
-									.item-title 张三
-									.item-after
-										span.icon.icon-right.userheader
+							for fan in friends.fans
+								li.item-content
+									.item-media
+										img.userheader(src=fan.headerpic width="34" height="34")
+									.item-inner
+										.item-title #{fan.nicename}
+										.item-after
+											span.icon.icon-right.userheader

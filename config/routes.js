@@ -106,6 +106,17 @@ module.exports= function(app){
 			}
 		})
 	})
+	//全文搜索 待更新
+	app.post('/search',function(req,res){
+		User.find({},function(err,users){
+			var arr=[];
+			for(i in users){
+				users[i].password=undefined;
+				arr.push(users[i])
+			}
+			res.send(arr)
+		})
+	})
 
 	//tab2 下拉刷新
 	app.get('/news/newsCont',function(req,res){
@@ -176,6 +187,14 @@ module.exports= function(app){
 		
 	})
 
+	//获取用户信息
+	app.post('/user/getmsg',function(req,res){
+		User.findOne({username:req.body.username},function(err,thisUse){
+			var MSG=thisUse;
+			MSG.password=undefined;
+			res.send(MSG);
+		})
+	})
 
 	//user/talkabout
 	app.post('/user/talkabout',function(req,res){

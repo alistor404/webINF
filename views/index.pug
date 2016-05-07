@@ -7,7 +7,7 @@ block content
         .col-5
         .col-80
           .searchbar
-            a.searchbar-cancel.button.button-fill.button-success 搜寻
+            a.searchbar-cancel.button.button-fill.button-success.search_button 搜寻
             div.search-input
               label.icon.icon-search(for="search")
               input.header_search_input(type="search",id='search',name="username",placeholder='输入关键字...')
@@ -36,7 +36,8 @@ block content
             .card.facebook-card
               .card-header.no-border
                 .facebook-avatar
-                  img(src=concems.headerpic width="34" height="34")
+                  img.userheader(src=concems.headerpic width="34" height="34")
+                  input(type='hidden' value=concems.username)
                 .facebook-name #{concems.nicename}
                 .facebook-date #{status.content.createTime}
               -var length=status.content.pic.length;
@@ -57,6 +58,8 @@ block content
       include ./pages/tab3.pug
     .page(id="tab4")
       include ./pages/tab4.pug
+    .page(id="searchpage")
+      include ./pages/searchpage.pug
     .page.page_fixed(id='Mydetail')
       include ./pages/Mydetail.pug
     .page.page_fixed(id='Myactive')
@@ -94,7 +97,7 @@ block content
             .item-inner
               .item-title.label 昵称
               .item-input
-                font #{user.nicename}
+                font.nicename #{user.nicename}
         li
           .item-content
             .item-media
@@ -110,10 +113,7 @@ block content
             .item-inner
               .item-title.label 性别
               .item-input
-                if user.sexy
-                  font 男生 
-                else
-                  font 女生
+                font.sexy 男生
         li
           .item-content
             .item-media
@@ -121,7 +121,7 @@ block content
             .item-inner
               .item-title.label 生日
               .item-input
-                font #{user.brithday}
+                font.brithday #{user.brithday}
         li
           .item-content
             .item-media
@@ -129,7 +129,7 @@ block content
             .item-inner
               .item-title.label 电话
               .item-input
-                font #{user.phonenum}
+                font.phonenum #{user.phonenum}
         li
           .item-content
             .item-media
@@ -137,11 +137,11 @@ block content
             .item-inner
               .item-title.label 签名
               .item-input
-                font #{user.sign}
+                font.sign #{user.sign}
       .content-block
         .row
           .col-50
-            a(href="#" class="button button-big button-fill button-success append_concems") 加为好友
+            a(href="#" class="button button-big button-fill button-success append_concems") 关注TA
           .col-50
             a(href="#" class="button button-big button-fill button-danger close-popup") 返回
   .panel-overlay

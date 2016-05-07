@@ -19,13 +19,34 @@ JQ(function(){
     })
   }
 
+  //搜索页面
+  $('.search_button').click(function(){
+    $.ajax({
+      url:'/search',
+      type:'post',
+      data:{
+        keyword:$('.header_search_input').val()
+      },
+      success:function(ret){
+        for(var i in ret){
+          var li='<li class="item-content"><div class="item-media"><img class="userheader" src="'+ret[i].headerpic+'" width="34" height="34"><input type="hidden" value="'+ret[i].username+'"></div><div class="item-inner"><div class="item-title">'+ret[i].nicename+'</div><div class="item-after"><span class="icon icon-right userheader"></span><input type="hidden" value="'+ret[i].username+'"></div></div></li>'
+          $('#users ul').append(li);
+        }
+        JQ('.userheader').click(function(){
+          frienddetail(JQ(this));
+        })
+      }
+    })
+    $.router.load("#searchpage")
+  })
+
   //tab2.pug
 	var loading = false;
       // 最多可加载的条目
-      var maxItems = 50;
+  var maxItems = 50;
 
-      // 每次加载添加多少条目
-      var itemsPerLoad = 5;
+  // 每次加载添加多少条目
+  var itemsPerLoad = 5;
 
 	function addItems(lastIndex) {
 	      // 生成新条目的HTML
@@ -85,11 +106,10 @@ JQ(function(){
        })
 
 
+    $.init()
 
-     
 
 
-      $.init()
     //mydetail.pug
      $("#dateChoose").datetimePicker({});
 
@@ -140,8 +160,25 @@ JQ(function(){
 
       //好友详情页
       $('.userheader').click(function(){
-        $.popup('.userdetail')
+          frienddetail(JQ(this));
       })
+
+      function frienddetail(JQthis){
+        JQ.ajax({
+          url:'/user/getmsg',
+          type:'post',
+          data:{username:JQthis.siblings('input').val()},
+          success:function(ret){
+            $('.userdetail').find('.username').text(ret.username)
+            $('.userdetail').find('.nicename').text(ret.nicename)
+            $('.userdetail').find('.phonenum').text(ret.phonenum)
+            $('.userdetail').find('.sexy').text(ret.sexy? '男生':"女生")
+            $('.userdetail').find('.sign').text(ret.sign)
+            $('.userdetail').find('.brithday').text(ret.brithday)
+          }
+        })
+        $.popup('.userdetail')
+      }
 
       //加好友
       $('.append_concems').click(function(){
@@ -201,7 +238,7 @@ JQ(function(){
       })
 
 
-      //好友动态图片浏览器
+      //好友动态图片浏览
       $(document).on("click", ".mystatus_picture", function(){
         var photosarray=[];
         var allimg=$(this).parent().parent().find('img');
