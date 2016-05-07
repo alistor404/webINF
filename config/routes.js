@@ -173,15 +173,22 @@ module.exports= function(app){
 	//user/appendconcems
 	app.post('/user/appendconcems',function(req,res){
 		User.findOne({username:req.session.user},function(err,myself){
-			if(myself.concems.indexOf(req.body.username)==0 || myself.concems.indexOf(req.body.username)){res.send({friendstatus:'0'});}else{
-				myself.concems.push(req.body.username);
-				myself.save();
-				User.findOne({username:req.body.username},function(err,seachuser){
-					seachuser.fans.push(myself.username);
-					seachuser.save(function(){
-						res.send({friendstatus:'1'});
-					})
-				})
+			var n=0;
+			for(var i in myself.concems){
+				if(myself.concems[i]==req.body.username){res.send({friendstatus:'0'});}
+				else{
+					n++;
+					if(n==myself.concems.length){
+						myself.concems.push(req.body.username);
+						myself.save();
+						User.findOne({username:req.body.username},function(err,seachuser){
+							seachuser.fans.push(myself.username);
+							seachuser.save(function(){
+								res.send({friendstatus:'1'});
+							})
+						})
+					}
+				}
 			}
 		})
 		
@@ -228,7 +235,10 @@ module.exports= function(app){
 					        break;
 					      case 'image/x-png':
 					        extName = 'png';
-					        break;		 
+					        break;
+				          case 'image/gif':
+					        extName = 'gif';
+					        break;			 
 					    }
 					    if(extName.length == 0){
 					    	fs.unlink(files[i].path)
@@ -319,7 +329,10 @@ module.exports= function(app){
 			        break;
 			      case 'image/x-png':
 			        extName = 'png';
-			        break;		 
+			        break;
+		          case 'image/gif':
+			        extName = 'gif';
+			        break;			 
 			    }
 			    if(extName.length == 0){
 			    	fs.unlink(files.headerpic.path)

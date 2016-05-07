@@ -187,7 +187,6 @@ JQ(function(){
       //加好友
       $('.userdetail .append_concems').click(function(){
         var username=$('.userdetail .username').text();
-        console.log(username)
         $.ajax({
           url:'/user/appendconcems',
           type:'post',
