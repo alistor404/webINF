@@ -45,7 +45,8 @@ block content
                   p &nbsp;&nbsp;#{status.content.text}
                 each pic in status.content.pic
                   .imgbox
-                    img(src=pic width="100%")
+                    img.mystatus_picture(src=pic width="100%" height='auto')
+                    //input(type='hidden' value=pic)
               .card-footer.no-border
                 a.link(href="#") 赞
                 a.open-popup(href="#",data-popup=".append_talks") 评论
@@ -76,7 +77,7 @@ block content
       form#formFile(name='formFile',method="post",action="/user/talkabout",target='frameFile',enctype="multipart/form-data")
         textarea.talkabout_textarea(placeholder='今天又运动了',name='mystatus')
         #localImag.row
-          .col-33.imgBOX 
+          .col-33.imgBOX
             label(for='inputMypic')
               span.icon.icon-picture
             input(type='file', multiple='mutiple',id='inputMypic',style="display:none",name='inputMypic')

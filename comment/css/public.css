@@ -114,6 +114,9 @@
 /*.card-content .imgbox:last-child{
 	clear: both;
 }*/
+.imgbox{
+	overflow:hidden;
+}
 .card_img_1 .imgbox{
 	height:100%;
 	width:100%;

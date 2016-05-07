@@ -38,6 +38,8 @@ module.exports= function(app){
 		sina.find({}).sort({'_id':-1}).limit(5).exec(function(err,sina){
 			if(err){
 				console.log(err)
+				res.send({stutas:'false'})
+				return;
 			}else{
 				var newsCont=[];
 				for(var i=0;i<5;i++){
@@ -112,6 +114,8 @@ module.exports= function(app){
 		sina.find({}).sort({'_id':-1}).limit(lastindex+5).exec(function(err,sinas){
 			if(err){
 				console.log(err)
+				res.send({stutas:'false'})
+				return;
 			}else{
 				
 				for(var i=lastindex;i<lastindex+5;i++){
@@ -143,7 +147,12 @@ module.exports= function(app){
 			userdetail.sign=req.body.sign;
 			userdetail.visible=req.body.visible;
 			userdetail.save(function(err,detail){
-				if(err){console.log(err)}else{
+				if(err){
+					console.log(err)
+					res.send({stutas:'false'})
+					return;
+				}
+				else{
 					res.send('success')
 				}
 			})
@@ -179,8 +188,9 @@ module.exports= function(app){
 	    // form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
 	    form.parse(req, function(err, fields, files) {
 		    if (err) {
-		      console.log(err)
-		      return;		
+		     	console.log(err)
+		      	res.send({stutas:'false'})
+				return;
 		    }else{
 		    	var picarray=[]
 		    	for(var i in files){
@@ -219,6 +229,8 @@ module.exports= function(app){
 			    Talkabout.findOne({username:req.session.user},function(err,data){
 			    	if(err){
 			    		console.log(err);
+			    		res.send({stutas:'false'})	
+			    		return;
 			    	}else{
 			    		if(!data){
 			    			var talkabout=new Talkabout({
@@ -248,7 +260,11 @@ module.exports= function(app){
 		var _id=_newsid.substring(1,_newsid.length-1)
 		
 		sinadetail.findOne({newsId:_id},function(err,newsdetail){
-			if(err){console.log(err)}else{
+			if(err){
+				console.log(err)
+				res.send({stutas:'false'})
+				return;
+			}else{
 				res.send(newsdetail);
 			}
 		})
@@ -268,6 +284,7 @@ module.exports= function(app){
 	    form.parse(req, function(err, fields, files) {
 		    if (err) {
 		      console.log(err)
+		      res.send({stutas:'false'})
 		      return;		
 		    }else{
 			    var extName = '';  //后缀名
@@ -290,10 +307,18 @@ module.exports= function(app){
 			        // res.send = '只支持png和jpg格式图片';
 			    }else{
 			    	User.findOne({username:req.session.user},function(err,user){
-			    		if(err){console.log(err)}else{
+			    		if(err){
+			    			console.log(err)
+			    			res.send({stutas:'false'})	
+			    			return;
+			    		}else{
 			    			user.headerpic=files.headerpic.path.substring(7,files.headerpic.path.length);
 			    			user.save(function(err,nuser){
-			    				if(err){console.log(err)}else{
+			    				if(err){
+					    			console.log(err)
+					    			res.send({stutas:'false'})	
+					    			return;
+		    					}else{
 			    					res.send({a:'a'})
 			    				}
 			    			})
@@ -317,14 +342,18 @@ module.exports= function(app){
 			User.find({username:_username},function(err,userdetail){
 				if(err){
 					console.log(err)
-				}
+					res.send({stutas:'false'})
+					return;
+				};
 				if(!!userdetail.length){
 					res.send({loginStatus:'4',msg:"糟糕，用户名被注册了"})
 				}else{
 					User.find({phonenum:_phonenum},function(err,userdetail){
 						if(err){
 							console.log(err)
-						}
+							res.send({stutas:'false'})
+							return;
+						};
 						if(!!userdetail.length){
 							res.send({loginStatus:'5',msg:"糟糕，电话被注册了"})
 						}else{
@@ -351,7 +380,9 @@ module.exports= function(app){
 			User.findOne({username:_username},function(err,userdetail){
 				if(err){
 					console.log(err)
-				}
+					res.send({stutas:'false'})
+					return;
+				};
 				if(!userdetail){
 					res.send({loginStatus:'4',msg:"用户名输入错误"})
 				}else{
@@ -369,14 +400,18 @@ module.exports= function(app){
 			User.find({username:_username},function(err,userdetail){
 				if(err){
 					console.log(err)
-				}
+					res.send({stutas:'false'})
+					return;
+				};
 				if(!!userdetail.length){
 					res.send({loginStatus:'4',msg:"糟糕，用户名被注册了"})
 				}else{
 					User.find({phonenum:_phonenum},function(err,userdetail){
 						if(err){
 							console.log(err)
-						}
+							res.send({stutas:'false'})
+							return;
+						};
 						if(!!userdetail.length){
 							res.send({loginStatus:'5',msg:"糟糕，电话被注册了"})
 						}else{
@@ -402,7 +437,9 @@ module.exports= function(app){
 			User.findOne({username:_username},function(err,userdetail){
 				if(err){
 					console.log(err)
-				}
+					res.send({stutas:'false'})
+					return;
+				};
 				if(!userdetail){
 					res.send({loginStatus:'4',msg:"用户名没有注册"})
 				}else{
@@ -421,7 +458,9 @@ module.exports= function(app){
 			User.findOne({username:_username},function(err,userdetail){
 				if(err){
 					console.log(err)
-				}
+					res.send({stutas:'false'})
+					return;
+				};
 				if(!userdetail){
 					res.send({loginStatus:'4',msg:"用户名没有注册"})
 				}else{
@@ -444,7 +483,11 @@ module.exports= function(app){
 				User.findOne({username:req.session.user},function(err,userdetail){
 					userdetail.password=_password;
 					userdetail.save(function(err){
-						if(err){console.log(err),res.end()}
+						if(err){
+							console.log(err),
+							res.send({stutas:'false'})				
+							return;res.end()
+						};
 						res.send({loginStatus:'11',msg:"重置成功，3S后跳转首页"})
 					});
 				})

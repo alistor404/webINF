@@ -1,4 +1,23 @@
 JQ(function(){
+  //tab1.pug 图片居中显示
+
+  $('.imgbox').each(function(){
+    $(this).height($(this).width());
+    var pich=$(this).find('img').height();
+    var picw=$(this).find('img').width();
+    if(pich<picw){
+      $(this).find('img').height('100%');
+      $(this).find('img').width('auto');
+      var left=$(this).find('img').height()-$(this).find('img').width();
+      $(this).find('img').css({'position':'relative','left':left/2})
+    }else if(pich>picw){
+      $(this).find('img').width('100%');
+      $(this).find('img').height('auto');
+      var top=$(this).find('img').width()-$(this).find('img').height();
+      $(this).find('img').css({'position':'relative','top':top/2})
+    }
+  })
+
   //tab2.pug
 	var loading = false;
       // 最多可加载的条目
@@ -66,10 +85,10 @@ JQ(function(){
 
 
 
-     $.init()
+     
 
 
-
+      $.init()
     //mydetail.pug
      $("#dateChoose").datetimePicker({});
 
@@ -142,11 +161,64 @@ JQ(function(){
         })
       })
 
+      //图片浏览
+     $(document).on("click", ".pb-standalone-captions", function(){
+        $.showIndicator();
+        var news_id=JQ(this).find('input').val();
+        
+        JQ.ajax({
+          url:'/news/'+news_id,
+          type:'get',
+          success:function(data){
+            if(!data || data.stutas=='false'){
+                console.log('出错了')
+                $.hideIndicator();
+                $.toast('加载出错')
+            }else{
+              var Parray=[];
+              for(var i=0;i<data.src.length;i++){
+                var news={
+                  url:'',
+                  caption:''
+                }
+                news.url=data.src[i];
+                news.caption=data.title[i];
+                Parray.push(news);
+              }
+              var myPhotoBrowserCaptions = new $.photoBrowser({
+                photos : Parray,
+                theme: 'dark',
+                type: 'standalone'
+              });
+              $.hideIndicator();
+              myPhotoBrowserCaptions.open();
+              $.init()
+            }
+          }
+        })
+        
+      })
 
 
-
-
-
+      //好友动态图片浏览器
+      $(document).on("click", ".mystatus_picture", function(){
+        var photosarray=[];
+        var allimg=$(this).parent().parent().find('img');
+        var picIndex=0;
+        for(var i in allimg){
+          photosarray.push(allimg.eq(i).attr('src'));
+          if($(this).attr('src')==allimg.eq(i).attr('src')){
+            picIndex=i;
+          }
+        }
+        var myPhotoBrowserStandalone = $.photoBrowser({
+            photos : photosarray
+        });
+        $.hideIndicator();
+        myPhotoBrowserStandalone.open(picIndex);
+        $.init() //重新配置init防止 冲突
+        
+      })
 
 
 	
