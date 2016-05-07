@@ -35,9 +35,7 @@ JQ(function(){
           var li='<li class="item-content"><div class="item-media"><img class="userheader" src="'+ret[i].headerpic+'" width="34" height="34"><input type="hidden" value="'+ret[i].username+'"></div><div class="item-inner"><div class="item-title">'+ret[i].nicename+'</div><div class="item-after"><span class="icon icon-right userheader"></span><input type="hidden" value="'+ret[i].username+'"></div></div></li>'
           $('#users ul').append(li);
         }
-        $('#users .userheader').click(function(){
-          frienddetail($(this));
-        })
+        frienddetail();
       }
     })
     $.router.load("#searchpage")
@@ -162,26 +160,24 @@ JQ(function(){
 
 
       //好友详情页
-      $('.userheader').click(function(){
-          frienddetail($(this));
-      })
-
-      function frienddetail($this){
-        $.ajax({
-          url:'/user/getmsg',
-          type:'post',
-          data:{username:$this.siblings('input').val()},
-          success:function(ret){
-            $('.userdetail').find('.userheaderpic').attr('src',ret.headerpic)
-            $('.userdetail').find('.username').text(ret.username)
-            $('.userdetail').find('.nicename').text(ret.nicename)
-            $('.userdetail').find('.phonenum').text(ret.phonenum)
-            $('.userdetail').find('.sexy').text(ret.sexy? '男生':"女生")
-            $('.userdetail').find('.sign').text(ret.sign)
-            $('.userdetail').find('.brithday').text(ret.brithday)
-          }
+      function frienddetail(){
+        $('.userheader').click(function(){
+          $.ajax({
+            url:'/user/getmsg',
+            type:'post',
+            data:{username:$(this).siblings('input').val()},
+            success:function(ret){
+              $('.userdetail').find('.userheaderpic').attr('src',ret.headerpic)
+              $('.userdetail').find('.username').text(ret.username)
+              $('.userdetail').find('.nicename').text(ret.nicename)
+              $('.userdetail').find('.phonenum').text(ret.phonenum)
+              $('.userdetail').find('.sexy').text(ret.sexy? '男生':"女生")
+              $('.userdetail').find('.sign').text(ret.sign)
+              $('.userdetail').find('.brithday').text(ret.brithday)
+            }
+          })
+          $.popup('.userdetail')
         })
-        $.popup('.userdetail')
       }
 
       //加好友
