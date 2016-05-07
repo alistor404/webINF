@@ -1,22 +1,23 @@
 JQ(function(){
   //tab1.pug 图片居中显示
-
-  $('.imgbox').each(function(){
-    $(this).height($(this).width());
-    var pich=$(this).find('img').height();
-    var picw=$(this).find('img').width();
-    if(pich<picw){
-      $(this).find('img').height('100%');
-      $(this).find('img').width('auto');
-      var left=$(this).find('img').height()-$(this).find('img').width();
-      $(this).find('img').css({'position':'relative','left':left/2})
-    }else if(pich>picw){
-      $(this).find('img').width('100%');
-      $(this).find('img').height('auto');
-      var top=$(this).find('img').width()-$(this).find('img').height();
-      $(this).find('img').css({'position':'relative','top':top/2})
-    }
-  })
+  window.onload=function(){
+    $('.imgbox').each(function(){
+      $(this).height($(this).width());
+      var pich=$(this).find('img').height();
+      var picw=$(this).find('img').width();
+      if(pich<picw){
+        $(this).find('img').height('100%');
+        $(this).find('img').width('auto');
+        var left=$(this).find('img').height()-$(this).find('img').width();
+        $(this).find('img').css({'position':'relative','left':left/2})
+      }else if(pich>picw){
+        $(this).find('img').width('100%');
+        $(this).find('img').height('auto');
+        var top=$(this).find('img').width()-$(this).find('img').height();
+        $(this).find('img').css({'position':'relative','top':top/2})
+      }
+    })
+  }
 
   //tab2.pug
 	var loading = false;
