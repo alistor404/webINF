@@ -21,6 +21,9 @@ JQ(function(){
 
   //搜索页面
   $('.search_button').click(function(){
+    if($('#users li')){
+      $('#users li').detach()
+    }
     $.ajax({
       url:'/search',
       type:'post',
@@ -32,7 +35,7 @@ JQ(function(){
           var li='<li class="item-content"><div class="item-media"><img class="userheader" src="'+ret[i].headerpic+'" width="34" height="34"><input type="hidden" value="'+ret[i].username+'"></div><div class="item-inner"><div class="item-title">'+ret[i].nicename+'</div><div class="item-after"><span class="icon icon-right userheader"></span><input type="hidden" value="'+ret[i].username+'"></div></div></li>'
           $('#users ul').append(li);
         }
-        $('.userheader').click(function(){
+        $('#users .userheader').click(function(){
           frienddetail($(this));
         })
       }
@@ -169,6 +172,7 @@ JQ(function(){
           type:'post',
           data:{username:$this.siblings('input').val()},
           success:function(ret){
+            $('.userdetail').find('.userheaderpic').attr('src',ret.headerpic)
             $('.userdetail').find('.username').text(ret.username)
             $('.userdetail').find('.nicename').text(ret.nicename)
             $('.userdetail').find('.phonenum').text(ret.phonenum)
@@ -181,8 +185,9 @@ JQ(function(){
       }
 
       //加好友
-      $('.append_concems').click(function(){
-        var username=$('.username').text();
+      $('.userdetail .append_concems').click(function(){
+        var username=$('.userdetail .username').text();
+        console.log(username)
         $.ajax({
           url:'/user/appendconcems',
           type:'post',
