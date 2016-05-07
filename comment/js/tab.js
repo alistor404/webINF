@@ -32,8 +32,8 @@ JQ(function(){
           var li='<li class="item-content"><div class="item-media"><img class="userheader" src="'+ret[i].headerpic+'" width="34" height="34"><input type="hidden" value="'+ret[i].username+'"></div><div class="item-inner"><div class="item-title">'+ret[i].nicename+'</div><div class="item-after"><span class="icon icon-right userheader"></span><input type="hidden" value="'+ret[i].username+'"></div></div></li>'
           $('#users ul').append(li);
         }
-        JQ('.userheader').click(function(){
-          frienddetail(JQ(this));
+        $('.userheader').click(function(){
+          frienddetail($(this));
         })
       }
     })
@@ -160,14 +160,14 @@ JQ(function(){
 
       //好友详情页
       $('.userheader').click(function(){
-          frienddetail(JQ(this));
+          frienddetail($(this));
       })
 
-      function frienddetail(JQthis){
-        JQ.ajax({
+      function frienddetail($this){
+        $.ajax({
           url:'/user/getmsg',
           type:'post',
-          data:{username:JQthis.siblings('input').val()},
+          data:{username:$this.siblings('input').val()},
           success:function(ret){
             $('.userdetail').find('.username').text(ret.username)
             $('.userdetail').find('.nicename').text(ret.nicename)
