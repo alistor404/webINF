@@ -160,6 +160,7 @@ JQ(function(){
 
 
       //好友详情页
+
       function frienddetail(){
         $('.userheader').click(function(){
           $.ajax({
@@ -179,6 +180,7 @@ JQ(function(){
           $.popup('.userdetail')
         })
       }
+      frienddetail();
 
       //加好友
       $('.userdetail .append_concems').click(function(){

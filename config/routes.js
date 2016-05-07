@@ -220,7 +220,6 @@ module.exports= function(app){
 		    }else{
 		    	var picarray=[]
 		    	for(var i in files){
-		    		console.log(files)
 		    		if(files[i].type){
 					    var extName = '';  //后缀名
 					    switch (files[i].type) {
