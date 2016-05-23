@@ -2,22 +2,28 @@ JQ(function(){
   //tab1.pug 图片居中显示
   window.onload=function(){
     $('.imgbox').each(function(){
-      $(this).height($(this).width());
-      var pich=$(this).find('img').height();
-      var picw=$(this).find('img').width();
-      if(pich<picw){
-        $(this).find('img').height('100%');
-        $(this).find('img').width('auto');
-        var left=$(this).find('img').height()-$(this).find('img').width();
-        $(this).find('img').css({'position':'relative','left':left/2})
-      }else if(pich>picw){
-        $(this).find('img').width('100%');
-        $(this).find('img').height('auto');
-        var top=$(this).find('img').width()-$(this).find('img').height();
-        $(this).find('img').css({'position':'relative','top':top/2})
-      }
+       picbox($(this))
     })
   }
+
+  function picbox(thisbox){
+      thisbox.height(thisbox.width());
+      console.log(thisbox.width())
+      console.log(thisbox.height())
+      var pich=thisbox.find('img').height();
+      var picw=thisbox.find('img').width();
+      if(pich<picw){
+        thisbox.find('img').height('100%');
+        thisbox.find('img').width('auto');
+        var left=thisbox.find('img').height()-thisbox.find('img').width();
+        thisbox.find('img').css({'position':'relative','left':left/2})
+      }else if(pich>picw){
+        thisbox.find('img').width('100%');
+        thisbox.find('img').height('auto');
+        var top=thisbox.find('img').width()-thisbox.find('img').height();
+        thisbox.find('img').css({'position':'relative','top':top/2})
+      }
+    }
 
   //搜索页面
   $('.search_button').click(function(){
@@ -346,8 +352,8 @@ JQ(function(){
             $('.append_talks .comment_card_main .facebook-date').text(commitTime);
             if(statusimg){
               for(var i=0;i<statusimg.length;i++){
-                var imgbox='<div class="swiper-slide"><img src="'+statusimg.eq(i).attr('src')+'"/></div>'
-                $('.swiper-wrapper').append(imgbox);  
+                var imgbox='<div class="swiper-slide imgBox"><img src="'+statusimg.eq(i).attr('src')+'"/></div>'
+                $('.swiper-wrapper').append(imgbox);
               }
             }
             JQ.ajax({
@@ -378,6 +384,9 @@ JQ(function(){
             })
             $.popup('.append_talks')
             $(".swiper-container").swiper();
+            $('.imgBox').each(function(){
+                picbox($(this))
+            })
             JQ(".append_commit_botton").show()
           }
        })
@@ -401,7 +410,6 @@ JQ(function(){
           statusID=$(this).siblings('input').val();
           concems=$(this).parent().parent().find('.concems_username').val();
           var old=parseInt($(this).text().substring(2));
-          $(this).text('赞('+eval(old+1)+')')
           $.ajax({
             url:'/status/postcommit',
             type:'post',
@@ -413,6 +421,8 @@ JQ(function(){
             success:function(ret){
               if(!!ret.a){
                 $.toast("你已经点过赞了哦");
+              }else{
+                $(this).text('赞('+eval(old+1)+')')
               }
             }
           })
