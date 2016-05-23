@@ -24,7 +24,7 @@ TalkaboutSchema.pre('save', function(next) {
 					statuslist.content.push(statusdetail);
 				}else{
 					for(var n in statuslist.content){
-						if(parseInt(statuslist.content[n].content.statusID)==parseInt(thisTalk.content[thisTalk.content.length-1].statusID)){
+						if(statuslist.content[n].content.statusID==thisTalk.content[thisTalk.content.length-1].statusID){
 							break;
 						};
 						if(t==statuslist.content.length){

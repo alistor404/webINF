@@ -353,11 +353,11 @@ module.exports= function(app){
 	})
 	//获取评论信息
 	app.post('/status/getcommit',function(req,res){
-		var _statusID=parseInt(req.body.statusID);
+		var _statusID=req.body.statusID;
 		var _concems=req.body.concems;
 		Statuslist.findOne({username:req.session.user},function(err,onestatus){
 			for(var i in onestatus.content){
-				if(parseInt(onestatus.content[i].content.statusID)==_statusID){
+				if(onestatus.content[i].content.statusID==_statusID){
 					users=[]
 					var t=0;
 					here:
@@ -394,13 +394,13 @@ module.exports= function(app){
 	})
 	//用户评论
 	app.post('/status/postcommit',function(req,res){
-		var _statusID=parseInt(req.body.statusID);
+		var _statusID=req.body.statusID;
 		var _text=req.body.text;
 		var _concems=req.body.concems;
 		var _createTime=req.body.createTime;
 		Talkabout.findOne({username:_concems},function(err,talkabout){
 			for(var i in talkabout.content){
-				if(parseInt(talkabout.content[i].statusID)==_statusID){
+				if(talkabout.content[i].statusID==_statusID){
 					if(!!req.body.zan){
 						if(talkabout.content[i].zan.length==0){
 							talkabout.content[i].zan.push(req.session.user);
