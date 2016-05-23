@@ -442,7 +442,6 @@ module.exports= function(app){
 											statuslist.save();
 										}
 									}
-									res.send({a:'1'})
 								})
 							}
 						})
