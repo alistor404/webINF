@@ -139,13 +139,13 @@
 	float: left;
 }
 
-.card_img_6,.card_img_5 .imgbox{
+.card_img_6 .imgbox,.card_img_5 .imgbox{
 	width:33%;
 	height:50%;
 	float: left;
 }
 
-.card_img_9,.card_img_7,.card_img_8 .imgbox{
+.card_img_9 .imgbox,.card_img_7 .imgbox,.card_img_8 .imgbox{
 	width:33%;
 	height:33%;
 	float: left;
