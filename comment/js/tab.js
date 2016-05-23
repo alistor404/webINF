@@ -8,8 +8,6 @@ JQ(function(){
 
   function picbox(thisbox){
       thisbox.height(thisbox.width());
-      console.log(thisbox.width())
-      console.log(thisbox.height())
       var pich=thisbox.find('img').height();
       var picw=thisbox.find('img').width();
       if(pich<picw){
@@ -346,6 +344,8 @@ JQ(function(){
             var text=$(this).parent().parent().find('.card-content').find('p').text();
             var statusimg=$(this).parent().parent().find('.card-content').find('img');
             var commitTime=$(this).parent().parent().find('.facebook-date').text();
+            var value=$(this).parent().parent().find('.userheader').siblings('input').val();
+            $('.append_talks .comment_card_main .userheader').siblings('input').val(value);
             $('.append_talks .comment_card_main .userheader').attr("src",userheader);
             $('.append_talks .comment_card_main .concems_username').val(concems);
             $('.append_talks .comment_card_main .facebook-name').text(text);
@@ -382,7 +382,8 @@ JQ(function(){
                 }
               }
             })
-            $.popup('.append_talks')
+            $.popup('.append_talks');
+            frienddetail();
             $(".swiper-container").swiper();
             $('.imgBox').each(function(){
                 picbox($(this))
@@ -410,6 +411,7 @@ JQ(function(){
           statusID=$(this).siblings('input').val();
           concems=$(this).parent().parent().find('.concems_username').val();
           var old=parseInt($(this).text().substring(2));
+          var $this=$(this)
           $.ajax({
             url:'/status/postcommit',
             type:'post',
@@ -419,10 +421,11 @@ JQ(function(){
               zan:'1'
             },
             success:function(ret){
-              if(!!ret.a){
+              if(!!ret.b){
                 $.toast("你已经点过赞了哦");
               }else{
-                $(this).text('赞('+eval(old+1)+')')
+                $this.text('赞('+eval(old+1)+')')
+                console.log($this.text())
               }
             }
           })

@@ -334,11 +334,13 @@ module.exports= function(app){
 			    				content:[]
 			    			})
 			    			talkabout.content.push(talkaboutobj);
+			    			talkabout.markModified('content');
 			    			talkabout.save(function(){
 			    				res.redirect('/index')
 			    			});
 			    		}else{
 				    		data.content.push(talkaboutobj);
+				    		data.markModified('content');
 				    		data.save(function(){
 				    			res.redirect('/index')
 				    		});
@@ -405,7 +407,7 @@ module.exports= function(app){
 						}else{
 							for(var t in talkabout.content[i].zan){
 								if(talkabout.content[i].zan[t]==req.session.user){
-									res.send({'a':'已经点过赞了'})
+									res.send({'b':'已经点过赞了'})
 									return false;
 								}else{
 									if(t==talkabout.content[i].zan.length-1){
@@ -425,8 +427,26 @@ module.exports= function(app){
 					//mixed类型发生变化必须
 					talkabout.markModified('content');
 					talkabout.save(function(err,a){
-						res.send({a:"111"})
-					});
+						User.findOne({username:_concems},function(err,user){
+							for(var i in user.fans){
+								Statuslist.findOne({username:user.fans[i]},function(err,statuslist){
+									for(var n in statuslist.content){
+										if(statuslist.content[n].content.statusID==_statusID){
+											if(onecommit){
+												statuslist.content[n].content.comment.push(onecommit);
+												
+											}else{
+												statuslist.content[n].content.zan.push(req.session.user)
+											}
+											statuslist.markModified('content');
+											statuslist.save();
+										}
+									}
+									res.send({a:'1'})
+								})
+							}
+						})
+					})
 				}
 			}
 		})
