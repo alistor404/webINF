@@ -399,7 +399,6 @@ module.exports= function(app){
 		Talkabout.findOne({username:_concems},function(err,talkabout){
 			for(var i in talkabout.content){
 				if(parseInt(talkabout.content[i].statusID)==_statusID){
-					console.log(talkabout.content[i].zan)
 					if(!!req.body.zan){
 						if(talkabout.content[i].zan.length==0){
 							talkabout.content[i].zan.push(req.session.user);
