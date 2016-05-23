@@ -15,25 +15,35 @@ TalkaboutSchema.pre('save', function(next) {
 	User.findOne({username:thisTalk.username},function(err,user){
 		for(var i in user.fans){
 			Statuslist.findOne({username:user.fans[i]},function(err,statuslist){
-				var statusdetail={
-					username:thisTalk.username,
-					content:thisTalk.content[thisTalk.content.length-1]
-				};
-				if(!statuslist){
-					var fansstatuslist=new Statuslist({
-						username:user.fans[i],
-						content:[]
-					})
-					fansstatuslist.content.push(statusdetail);
-					fansstatuslist.save(function(){
-						next();
-					});
-				}else{
+				var t=1;
+				if(statuslist.content.length==0){
+					var statusdetail={
+						username:thisTalk.username,
+						content:thisTalk.content[thisTalk.content.length-1]
+					};
 					statuslist.content.push(statusdetail);
-					statuslist.save(function(){
-						next();
-					});
-				}
+				}else{
+					for(var n in statuslist.content){
+						if(parseInt(statuslist.content[n].content.statusID)==parseInt(thisTalk.content[thisTalk.content.length-1].statusID)){
+							statuslist.content[n].content.comment=thisTalk.content[thisTalk.content.length-1].comment;
+							statuslist.content[n].content.zan=thisTalk.content[thisTalk.content.length-1].zan;
+							break;
+						};
+						if(t==statuslist.content.length){
+							var statusdetail={
+								username:thisTalk.username,
+								content:thisTalk.content[thisTalk.content.length-1]
+							};
+							statuslist.content.push(statusdetail);
+							break;
+						}
+						t++;
+					}
+				};
+				statuslist.markModified('content');
+				statuslist.save(function(){
+					next();
+				});
 			})
 		}
 	})

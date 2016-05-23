@@ -8,6 +8,9 @@ TopClient = require('./msgcheck/topClient.js').TopClient;//阿里大鱼
 var port=process.env.PORT || 80 //设置端口 前为环境变量
 var app = express() //启动服务器
 
+// var server = require('http').createServer(app);
+// var io = require('socket.io')(server);//将socket挂载为express服务
+
 var db = mongoose.connect('mongodb://127.0.0.1/sport'); //创建一个数据库连接
 
 app.use(bodyParser.urlencoded({extended: false}));

@@ -74,16 +74,23 @@ module.exports= function(app){
 								for(var n in user.fans){
 									cont2++;
 									User.findOne({username:user.fans[n]},function(err,fans){
-										friends.fans.push(fans);
+										if(fans){friends.fans.push(fans);};
 										cont2--;
 										if(cont2==0){
 											Statuslist.findOne({username:req.session.user},function(err,statuslist){
 												if(!!statuslist){
 													//倒序排列
-													for(var i in statuslist.content){
-														friends.statuslist[i]=statuslist.content[statuslist.content.length-1-i]
+													var n=0;
+													if(statuslist.content.length<5){
+														for(var i=statuslist.content.length-1;i>=0;i--){
+															friends.statuslist[n++]=statuslist.content[i]
+														}
+													}else{
+														for(var i=statuslist.content.length-1;i>=statuslist.content.length-5;i--){
+															friends.statuslist[n++]=statuslist.content[i]
+														}
 													}
-												};												
+												};
 												res.render('index',{
 													friends:friends,
 													user:user,
@@ -118,7 +125,7 @@ module.exports= function(app){
 		})
 	})
 
-	//tab2 下拉刷新
+	//tab2 无限滚动
 	app.get('/news/newsCont',function(req,res){
 		var lastindex=parseInt(req.query.Index);
 		var newsCont=[];
@@ -148,8 +155,35 @@ module.exports= function(app){
 			}
 		})
 	})
-
-	//userdetailupdate
+	//tab1 无限滚动   闭包待处理
+	app.get('/user/stutaslist',function(req,res){
+		var lastindex=parseInt(req.query.Index);
+		var newCont=[];
+		Statuslist.findOne({username:req.session.user},function(err,statuslist){
+			if(statuslist.content.length>lastindex){
+				for(var i =statuslist.content.length-lastindex;i>=statuslist.content.length-lastindex-5;i--){
+					User.findOne({username:statuslist.username},function(err,thisConcem){
+						if(i<0){res.send(newCont);return false};
+						var onestatus={
+							concems:{},
+							status:{}
+						}
+						onestatus.status=statuslist.content[i];
+						thisConcem.password=undefined;
+						onestatus.concems=thisConcem;
+						newCont.push(onestatus);
+						if(newCont.length==5){
+							for(var m =0;m<5;m++){
+								console.log(newCont[m].status)
+							}
+							res.send(newCont)
+						}
+					})
+				}
+			}
+		})
+	})
+	//userdetailupdate 
 	app.post('/user/detail',function(req,res){
 		User.findOne({username:req.session.user},function(err,userdetail){
 			userdetail.nicename=req.body.nicename;
@@ -170,7 +204,7 @@ module.exports= function(app){
 		})
 	})
 
-	//user/appendconcems
+	//user/appendconcems 新增添加时在好友状态列表中添加对方已有状态
 	app.post('/user/appendconcems',function(req,res){
 		User.findOne({username:req.session.user},function(err,myself){
 			var n=0;
@@ -180,7 +214,38 @@ module.exports= function(app){
 					n++;
 					if(n==myself.concems.length){
 						myself.concems.push(req.body.username);
-						myself.save();
+						myself.save(function(){
+							//查询被关注者历史状态
+							Talkabout.findOne({username:req.body.username},function(err,talkabouts){
+								var talkstatus=[];
+								var contents=talkabouts.content;
+								for(var i in contents){
+									var onestatus={
+										username:req.body.username,
+										content:{}
+									}
+									onestatus.content=contents[i];
+									talkstatus.push(onestatus);
+								}
+								Statuslist.findOne({username:req.session.user},function(err,statuslist){
+									var all=statuslist.content;
+									for(var i in talkstatus){
+										all.push(talkstatus[i])
+									}
+									all.sort(function(a,b){
+										if(a.createTime>b.createTime){
+											return 1
+										}else{
+											return -1
+										}
+        							});
+        							console.log(all)
+        							statuslist.content=all;
+        							statuslist.save();
+								})
+							})
+							
+						});
 						User.findOne({username:req.body.username},function(err,seachuser){
 							seachuser.fans.push(myself.username);
 							seachuser.save(function(){
@@ -250,7 +315,10 @@ module.exports= function(app){
 				var talkaboutobj={
 			    	text:fields.mystatus,
 			    	pic:picarray,
-			    	createTime:''
+			    	createTime:'',
+			    	comment:[],
+			    	statusID:req.session.user+new Date().getTime(),
+			    	zan:[]
 			    }
 			    var date=new Date;
 			    talkaboutobj.createTime=date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+'  '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
@@ -280,6 +348,89 @@ module.exports= function(app){
 			    })
 		  	}
 		});
+	})
+	//获取评论信息
+	app.post('/status/getcommit',function(req,res){
+		var _statusID=parseInt(req.body.statusID);
+		var _concems=req.body.concems;
+		Statuslist.findOne({username:req.session.user},function(err,onestatus){
+			for(var i in onestatus.content){
+				if(parseInt(onestatus.content[i].content.statusID)==_statusID){
+					users=[]
+					var t=0;
+					here:
+					for(var n in onestatus.content[i].content.comment){
+						for(var t in users){
+							if(users[i]==onestatus.content[i].content.comment[n].username){
+								if(t==onestatus.content[i].content.comment.length-1){
+									res.send({
+										users:users,
+										comment:onestatus.content[i].content.comment
+									})
+								}else{
+									t++
+									break here;
+								}
+							}
+						}
+						User.findOne({username:onestatus.content[i].content.comment[n].username},function(err,user){
+							user.password=undefined;
+							users.push(user)
+							t++;
+							if(t==onestatus.content[i].content.comment.length){
+								res.send({
+									users:users,
+									comment:onestatus.content[i].content.comment
+								})
+								return false;
+							}
+						})
+					}
+				}
+			}
+		})
+	})
+	//用户评论
+	app.post('/status/postcommit',function(req,res){
+		var _statusID=parseInt(req.body.statusID);
+		var _text=req.body.text;
+		var _concems=req.body.concems;
+		var _createTime=req.body.createTime;
+		Talkabout.findOne({username:_concems},function(err,talkabout){
+			for(var i in talkabout.content){
+				if(parseInt(talkabout.content[i].statusID)==_statusID){
+					console.log(talkabout.content[i].zan)
+					if(!!req.body.zan){
+						if(talkabout.content[i].zan.length==0){
+							talkabout.content[i].zan.push(req.session.user);
+						}else{
+							for(var t in talkabout.content[i].zan){
+								if(talkabout.content[i].zan[t]==req.session.user){
+									res.send({'a':'已经点过赞了'})
+									return false;
+								}else{
+									if(t==talkabout.content[i].zan.length-1){
+										talkabout.content[i].zan.push(req.session.user)
+									}
+								}
+							}
+						}
+					}else{
+						var onecommit={
+							username:req.session.user,
+							text:_text,
+							createTime:_createTime
+						}
+						talkabout.content[i].comment.push(onecommit);
+					};
+					//mixed类型发生变化必须
+					talkabout.markModified('content');
+					talkabout.save(function(err,a){
+						res.send({a:"111"})
+					});
+				}
+			}
+		})
 	})
 
 	//page2 news detail

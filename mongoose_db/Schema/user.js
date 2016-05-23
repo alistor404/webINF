@@ -1,4 +1,5 @@
 var mongoose = require('mongoose')
+var Statuslist=require("../Model/friendstatuslist.js")//创建用户时添加用户statuslist
 var Schema = mongoose.Schema
 var ObjectId = Schema.Types.ObjectId
 
@@ -51,6 +52,14 @@ UserSchema.pre('save', function(next) {
     this.nicename=this.username;
     this.concems.push(this.username);
     this.fans.push(this.username);
+    this.headerpic='icon/headerpic.jpg';
+    var statuslist=new Statuslist({
+      username:this.username,
+      content:[]
+    })
+    statuslist.save(function(){
+      next();
+    });
   };
   next();
 })

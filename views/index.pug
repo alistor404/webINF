@@ -24,7 +24,7 @@ block content
         a.button(href="#tab4")
           img(src='icon/tool_gray.png')
   .page-group
-    .page(id='tab1').content.page-current
+    .page.content.page-current.infinite-scroll(data-distance="50",id='tab1')
       .card.talkabout_boxCard
         .card-content.open-popup(data-popup=".append_commit")
           .talkabout
@@ -33,11 +33,11 @@ block content
       each status in friends.statuslist
         each concems in friends.concems
           if status.username==concems.username
-            .card.facebook-card
+            .card.facebook-card.tab1_card
               .card-header.no-border
                 .facebook-avatar
                   img.userheader(src=concems.headerpic width="34" height="34")
-                  input(type='hidden' value=concems.username)
+                  input.concems_username(type='hidden' value=concems.username)
                 .facebook-name #{concems.nicename}
                 .facebook-date #{status.content.createTime}
               -var length=status.content.pic.length;
@@ -47,11 +47,12 @@ block content
                 each pic in status.content.pic
                   .imgbox
                     img.mystatus_picture(src=pic width="100%" height='auto')
-                    //input(type='hidden' value=pic)
               .card-footer.no-border
-                a.link(href="#") 赞
-                a.open-popup(href="#",data-popup=".append_talks") 评论
-                a.link(href="#") 分享
+                a.status_zan.link(href="#") 赞(#{status.content.zan.length})
+                a.status_comment(href="#",data-popup=".append_talks") 评论(#{status.content.comment.length})
+                input(type='hidden' value=status.content.statusID)
+      .infinite-scroll-preloader
+        .preloader
     .page.infinite-scroll.content(data-distance="50",id="tab2")
       include ./pages/tab2.pug
     .page(id="tab3")
@@ -69,8 +70,22 @@ block content
     .page.page_fixed(id='Myfriend')
       include ./pages/Myfriend.pug
   .popup.append_talks
-    .content-block
-      p.close-popup Close popup1
+    span.icon.icon-down.popup_down.close-popup
+    .card.facebook-card.comment_card_main
+      .card-header.no-border
+        .facebook-avatar
+          img.userheader(src='' width="34" height="34")
+          input(type='hidden' value='')
+        .facebook-name
+        .facebook-date
+    .swiper-container(data-space-between='10')
+      .swiper-wrapper
+    .list
+  .append_commit_botton
+    .commit_box
+      font.append_or_close ＋
+      input(type='text')
+      font.text_submit 发送 
   .popup.append_commit
     header.bar.bar-nav
       h1.title 分享你的运动状态
@@ -143,7 +158,7 @@ block content
           .col-50
             a(href="#" class="button button-big button-fill button-success append_concems") 关注TA
           .col-50
-            a(href="#" class="button button-big button-fill button-danger close-popup") 返回
+            a(href="#" class="button button-big button-fill button-danger userdetail_back") 返回
   .panel-overlay
   .panel.panel-right.panel-cover.theme-dark(id='panel-right')
     .content-block
