@@ -109,67 +109,67 @@ JQ(function(){
           }, 1000);
        })
 
-      //tab1 条目
-      var tab1lastIndex = 5;
-      function tab1addItems(lastIndex) {
-        // 生成新条目的HTML
-       JQ.ajax({
-        url:'/user/stutaslist',
-        type:'get',
-        data:{
-          Index:lastIndex
-        },
-        success:function(ret){
-          if(!ret){
-            return false
-            console.log(err)
-          }else{
-            for(var i=0;i<ret.length;i++){
-              var $html='<div class="card facebook-card tab1_card"><div class="card-header no-border"><div class="facebook-avatar"><img class="userheader" src="'+ret[i].concems.headerpic+'" width="34" height="34"><input type="hidden" value="'+ret[i].concems.username+'"></div><div class="facebook-name">'+ret[i].concems.nicename+'</div><div class="facebook-date">'+ret[i].status.content.createTime+'</div></div><div class="card-content card_img_'+ret[i].status.content.pic.length+'"></div><div class="card-footer no-border"><a class="link" href="#">赞</a><a class="open-popup" href="#" data-popup=".append_talks">评论</a><a class="link" href="#">分享</a></div></div>';
-              for(var n in ret[i].status.content.pic){
-                var src=ret[i].status.content.pic[n];
-                var $pic='<div class="imgbox"><p>&nbsp;&nbsp;'+ret[i].status.content.text+'</p><img class="mystatus_picture" src="'+src+'" width="100%" height="auto"></div>';
-                console.log($($html))
-                $($html).find('.card-content').append($($pic));
-              }
-              $('#tab1').append($($html));
-            }
-          }
-        }
-       })
+      // //tab1 条目
+      // var tab1lastIndex = 5;
+      // function tab1addItems(lastIndex) {
+      //   // 生成新条目的HTML
+      //  JQ.ajax({
+      //   url:'/user/stutaslist',
+      //   type:'get',
+      //   data:{
+      //     Index:lastIndex
+      //   },
+      //   success:function(ret){
+      //     if(!ret){
+      //       return false
+      //       console.log(err)
+      //     }else{
+      //       for(var i=0;i<ret.length;i++){
+      //         var $html='<div class="card facebook-card tab1_card"><div class="card-header no-border"><div class="facebook-avatar"><img class="userheader" src="'+ret[i].concems.headerpic+'" width="34" height="34"><input type="hidden" value="'+ret[i].concems.username+'"></div><div class="facebook-name">'+ret[i].concems.nicename+'</div><div class="facebook-date">'+ret[i].status.content.createTime+'</div></div><div class="card-content card_img_'+ret[i].status.content.pic.length+'"></div><div class="card-footer no-border"><a class="link" href="#">赞</a><a class="open-popup" href="#" data-popup=".append_talks">评论</a><a class="link" href="#">分享</a></div></div>';
+      //         for(var n in ret[i].status.content.pic){
+      //           var src=ret[i].status.content.pic[n];
+      //           var $pic='<div class="imgbox"><p>&nbsp;&nbsp;'+ret[i].status.content.text+'</p><img class="mystatus_picture" src="'+src+'" width="100%" height="auto"></div>';
+      //           console.log($($html))
+      //           $($html).find('.card-content').append($($pic));
+      //         }
+      //         $('#tab1').append($($html));
+      //       }
+      //     }
+      //   }
+      //  })
 
       
-      }
+      // }
 
       
-      $('#tab1').on('infinite',function() {
-          // 如果正在加载，则退出
-          if (loading) return;
+      // $('#tab1').on('infinite',function() {
+      //     // 如果正在加载，则退出
+      //     if (loading) return;
 
-          // 设置flag
-          loading = true;
+      //     // 设置flag
+      //     loading = true;
 
-          // 模拟1s的加载过程
-          setTimeout(function() {
-              // 重置加载flag
-              loading = false;
+      //     // 模拟1s的加载过程
+      //     setTimeout(function() {
+      //         // 重置加载flag
+      //         loading = false;
 
-              if (lastIndex >= maxItems) {
-                  // 加载完毕，则注销无限加载事件，以防不必要的加载
-                  $.detachInfiniteScroll($('.infinite-scroll'));
-                  // 删除加载提示符
-                  $('.infinite-scroll-preloader').remove();
-                  return;
-              }
+      //         if (lastIndex >= maxItems) {
+      //             // 加载完毕，则注销无限加载事件，以防不必要的加载
+      //             $.detachInfiniteScroll($('.infinite-scroll'));
+      //             // 删除加载提示符
+      //             $('.infinite-scroll-preloader').remove();
+      //             return;
+      //         }
 
-              // 添加新条目
-              tab1addItems(tab1lastIndex);
-              // 更新最后加载的序号
-              tab1lastIndex = $('.tab1_card').length;
-                //容器发生改变,如果是js滚动，需要刷新滚动
-            $.refreshScroller();
-          }, 1000);
-       })
+      //         // 添加新条目
+      //         tab1addItems(tab1lastIndex);
+      //         // 更新最后加载的序号
+      //         tab1lastIndex = $('.tab1_card').length;
+      //           //容器发生改变,如果是js滚动，需要刷新滚动
+      //       $.refreshScroller();
+      //     }, 1000);
+      //  })
 
     $.init()
 
@@ -412,6 +412,7 @@ JQ(function(){
           concems=$(this).parent().parent().find('.concems_username').val();
           var old=parseInt($(this).text().substring(2));
           var $this=$(this)
+          $this.text('赞('+eval(old+1)+')')
           $.ajax({
             url:'/status/postcommit',
             type:'post',
@@ -422,10 +423,8 @@ JQ(function(){
             },
             success:function(ret){
               if(!!ret.b){
+                $this.text('赞('+eval(old)+')')
                 $.toast("你已经点过赞了哦");
-              }else{
-                $this.text('赞('+eval(old+1)+')')
-                console.log($this.text())
               }
             }
           })

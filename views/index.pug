@@ -51,8 +51,8 @@ block content
                 a.status_zan.link(href="#") 赞(#{status.content.zan.length})
                 a.status_comment(href="#",data-popup=".append_talks") 评论(#{status.content.comment.length})
                 input(type='hidden' value=status.content.statusID)
-      .infinite-scroll-preloader
-        .preloader
+      //.infinite-scroll-preloader
+        //.preloader
     .page.infinite-scroll.content(data-distance="50",id="tab2")
       include ./pages/tab2.pug
     .page(id="tab3")
