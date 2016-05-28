@@ -158,28 +158,25 @@ module.exports= function(app){
 	//tab1 无限滚动   闭包待处理
 	app.get('/user/stutaslist',function(req,res){
 		var lastindex=parseInt(req.query.Index);
-		var newCont=[];
 		Statuslist.findOne({username:req.session.user},function(err,statuslist){
-			if(statuslist.content.length>lastindex){
-				for(var i =statuslist.content.length-lastindex;i>=statuslist.content.length-lastindex-5;i--){
-					User.findOne({username:statuslist.username},function(err,thisConcem){
-						if(i<0){res.send(newCont);return false};
-						var onestatus={
-							concems:{},
-							status:{}
-						}
-						onestatus.status=statuslist.content[i];
-						thisConcem.password=undefined;
-						onestatus.concems=thisConcem;
-						newCont.push(onestatus);
-						if(newCont.length==5){
-							for(var m =0;m<5;m++){
-								console.log(newCont[m].status)
-							}
-							res.send(newCont)
-						}
-					})
-				}
+			var newCont=[];
+			var n=0;
+			for(var i =statuslist.content.length-lastindex;i>statuslist.content.length-lastindex-5&&i>=0;i--){
+				var thisstatus=statuslist.content[i];
+				var onestatus={
+						concems:{},
+						status:{}
+					}
+				onestatus.status=thisstatus;
+				newCont.push(onestatus);
+				User.findOne({username:thisstatus.username},function(err,thisConcem){
+					thisConcem.password=undefined;
+					newCont[n].concems=thisConcem;
+					n++
+					if(n==5){
+						res.send(newCont)
+					}
+				})
 			}
 		})
 	})
@@ -359,33 +356,20 @@ module.exports= function(app){
 			for(var i in onestatus.content){
 				if(onestatus.content[i].content.statusID==_statusID){
 					users=[]
-					var t=0;
-					here:
-					for(var n in onestatus.content[i].content.comment){
-						for(var t in users){
-							if(users[i]==onestatus.content[i].content.comment[n].username){
-								if(t==onestatus.content[i].content.comment.length-1){
-									res.send({
-										users:users,
-										comment:onestatus.content[i].content.comment
-									})
-								}else{
-									t++
-									break here;
-								}
-							}
-						}
-						User.findOne({username:onestatus.content[i].content.comment[n].username},function(err,user){
+					var t=1;
+					var comment=onestatus.content[i].content.comment;
+					for(var n in comment){
+						User.findOne({username:comment[n].username},function(err,user){
 							user.password=undefined;
 							users.push(user)
-							t++;
-							if(t==onestatus.content[i].content.comment.length){
+							if(t==comment.length){
 								res.send({
 									users:users,
-									comment:onestatus.content[i].content.comment
+									comment:comment
 								})
 								return false;
 							}
+							t++;
 						})
 					}
 				}
