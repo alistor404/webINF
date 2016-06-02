@@ -177,6 +177,11 @@
 	margin:auto;
 }
 
+/*发表动态*/
+.hiddenform{
+	display: none;
+	width: 100%
+}
 /*tab2*/
 .page-group{
 	top: 4.2rem;
@@ -314,3 +319,26 @@
 .swiper-slide img{
 	width:100%;
 }
+
+/*tap3*/
+#tab3 .card-header{
+	color:#4478AD;
+}
+#tab3 .right{
+	float: right
+}
+.activetaps{
+	background-color: #0B8115;
+	border-radius: 10%;
+	padding: .2rem;
+    color: white;
+}
+.active_detail{
+	position: fixed !important;
+}
+.active_detail span{
+	color:#06736F;
+}
+
+
+.active_picbox

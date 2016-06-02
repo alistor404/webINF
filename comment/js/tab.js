@@ -507,7 +507,10 @@ function appendcliclk(){
           $(".append_commit_botton").hide() 
        })
 
-
+       $('#tab3 .card').click(function(){
+        $.popup('.active_detail')
+       })
+     
 
 
 	     

@@ -7,7 +7,7 @@ var sina=require("../mongoose_db/Model/sinaSport.js")
 var sinadetail=require("../mongoose_db/Model/sinadetail.js")
 var Talkabout=require("../mongoose_db/Model/talkabout.js")
 var Statuslist=require("../mongoose_db/Model/friendstatuslist.js")
-
+var Active=require('../mongoose_db/Model/active.js')
 
 
 
@@ -55,60 +55,70 @@ module.exports= function(app){
 					news.time=sina[i].createTime;
 					newsCont.push(news);
 				};
-				//好友详情
-				User.findOne({username:req.session.user},function(err,user){
-					var friends={
-						concems:[],
-						fans:[],
-						statuslist:[]
+				Active.find({}).sort({'_id':-1}).limit(50).exec(function(err,actives){
+					var activelist=[];
+					for(var mt in actives){
+						var actcontent={
+							activeID:actives[mt]._id,
+							comment:actives[mt].comment.length,
+							zan:actives[mt].zan.length,
+							join:actives[mt].join.length,
+							title:actives[mt].title,
+							taps:actives[mt].taps,
+							activeTime:actives[mt].activeTime
+						}
+						activelist.push(actcontent)
 					}
-					//添加计步器
-					var cont1=0;
-					var cont2=0;
-					for(var i in user.concems){
-						cont1++;
-						User.findOne({username:user.concems[i]},function(err,concems){
-							friends.concems.push(concems);
-							cont1--;
-							if(cont1==0){
-								for(var n in user.fans){
-									cont2++;
-									User.findOne({username:user.fans[n]},function(err,fans){
-										if(fans){friends.fans.push(fans);};
-										cont2--;
-										if(cont2==0){
-											Statuslist.findOne({username:req.session.user},function(err,statuslist){
-												if(!!statuslist){
-													//倒序排列
-													var n=0;
-													if(statuslist.content.length<5){
-														for(var i=statuslist.content.length-1;i>=0;i--){
-															friends.statuslist[n++]=statuslist.content[i]
+					//好友详情
+					User.findOne({username:req.session.user},function(err,user){
+						var friends={
+							concems:[],
+							fans:[],
+							statuslist:[]
+						}
+						//添加计步器
+						var cont1=0;
+						var cont2=0;
+						for(var i in user.concems){
+							cont1++;
+							User.findOne({username:user.concems[i]},function(err,concems){
+								friends.concems.push(concems);
+								cont1--;
+								if(cont1==0){
+									for(var n in user.fans){
+										cont2++;
+										User.findOne({username:user.fans[n]},function(err,fans){
+											if(fans){friends.fans.push(fans);};
+											cont2--;
+											if(cont2==0){
+												Statuslist.findOne({username:req.session.user},function(err,statuslist){
+													if(!!statuslist){
+														//倒序排列
+														var n=0;
+														if(statuslist.content.length<5){
+															for(var i=statuslist.content.length-1;i>=0;i--){
+																friends.statuslist[n++]=statuslist.content[i]
+															}
+														}else{
+															for(var i=statuslist.content.length-1;i>=statuslist.content.length-5;i--){
+																friends.statuslist[n++]=statuslist.content[i]
+															}
 														}
-													}else{
-														for(var i=statuslist.content.length-1;i>=statuslist.content.length-5;i--){
-															friends.statuslist[n++]=statuslist.content[i]
-														}
-													}
-												};
-												res.render('index',{
-													friends:friends,
-													user:user,
-													content:newsCont
-												})
-
-
-											})
-											
-										}
-									})
+													};
+													res.render('index',{
+														friends:friends,
+														user:user,
+														content:newsCont,
+														activelists:activelist
+													})
+												})	
+											}
+										})
+									}
 								}
-							}
-
-						})
-					}
-					
-					
+							})
+						}	
+					})
 				})
 			}
 		})
@@ -309,42 +319,61 @@ module.exports= function(app){
 						}
 					}
 				}
-				var talkaboutobj={
-			    	text:fields.mystatus,
-			    	pic:picarray,
-			    	createTime:'',
-			    	comment:[],
-			    	statusID:req.session.user+new Date().getTime(),
-			    	zan:[]
-			    }
-			    var date=new Date;
-			    talkaboutobj.createTime=date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+'  '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-			    Talkabout.findOne({username:req.session.user},function(err,data){
-			    	if(err){
-			    		console.log(err);
-			    		res.send({stutas:'false'})	
-			    		return;
-			    	}else{
-			    		if(!data){
-			    			var talkabout=new Talkabout({
-			    				username:req.session.user,
-			    				content:[]
-			    			})
-			    			talkabout.content.push(talkaboutobj);
-			    			talkabout.markModified('content');
-			    			talkabout.save(function(){
-			    				res.redirect('/index')
-			    			});
-			    		}else{
-				    		data.content.push(talkaboutobj);
-				    		data.markModified('content');
-				    		data.save(function(){
-				    			res.redirect('/index')
-				    		});
-				    	}
+				// 发表为状态
+				if(!fields.activedate){
+					var talkaboutobj={
+				    	text:fields.mystatus,
+				    	pic:picarray,
+				    	createTime:'',
+				    	comment:[],
+				    	statusID:req.session.user+new Date().getTime(),
+				    	zan:[]
+				    }
+				    var date=new Date;
+				    talkaboutobj.createTime=date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+'  '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+				    Talkabout.findOne({username:req.session.user},function(err,data){
+				    	if(err){
+				    		console.log(err);
+				    		res.send({stutas:'false'})	
+				    		return;
+				    	}else{
+				    		if(!data){
+				    			var talkabout=new Talkabout({
+				    				username:req.session.user,
+				    				content:[]
+				    			})
+				    			talkabout.content.push(talkaboutobj);
+				    			talkabout.markModified('content');
+				    			talkabout.save(function(){
+				    				res.redirect('/index')
+				    			});
+				    		}else{
+					    		data.content.push(talkaboutobj);
+					    		data.markModified('content');
+					    		data.save(function(){
+					    			res.redirect('/index')
+					    		});
+					    	}
 
-			    	}
-			    })
+				    	}
+				    })
+				}else{
+					//发表为活动
+					var date=new Date;
+					var activeobj= new Active({
+						text:fields.mystatus,
+				    	pic:picarray,
+				    	createTime:date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+'  '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds(),
+				    	comment:[],
+				    	zan:[],
+				    	join:[req.session.user],
+				    	localtion:fields.activelocaltion,
+				    	activeTime:fields.activedate,
+				    	taps:[fields.activetaps],
+				    	title:fields.activeTitle
+					})
+					activeobj.save();
+				}
 		  	}
 		});
 	})

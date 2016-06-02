@@ -1,1 +1,17 @@
-tab3.pug
+each actives in activelists
+	.card
+		input(type="hidden",value=actives.activeID)
+		.card-header.no-border ##{actives.title}#
+		.card-content
+			.card-content-inner
+				font.activetaps #{actives.taps}
+				font.right #{actives.activeTime}
+		.card-footer
+			a.line 赞(#{actives.zan})
+			a.line 评论(#{actives.comment})
+			a.line 人数(#{actives.join})
+.popup.active_detail
+	header.bar.bar-nav
+	h1.title 分享你的运动状态
+	button.button.pull-left.close-popup 取消
+	button.button.pull-right#submittype 发表

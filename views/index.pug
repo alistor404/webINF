@@ -90,9 +90,44 @@ block content
     header.bar.bar-nav
       h1.title 分享你的运动状态
       button.button.pull-left.close-popup 取消
-      button.button.pull-right#filesubmit 发表
+      button.button.pull-right#submittype 发表
     .content
       form#formFile(name='formFile',method="post",action="/user/talkabout",target='frameFile',enctype="multipart/form-data")
+        .list-block.hiddenform
+          ul
+            li
+              .item-content
+                .item-inner
+                  .item-title.label 活动标题
+                  .item-input
+                    input(type='text',name='activeTitle')
+            li
+              .item-content
+                .item-inner
+                  .item-title.label 活动时间
+                  .item-input
+                    input#datecheck(type='text',data-toggle='date',name='activedate')
+            li
+              .item-content
+                .item-inner
+                  .item-title.label 活动类型
+                  .item-input
+                    select(name='activetaps')
+                      option 比赛组织
+                      option 郊游
+                      option 线下聚会
+                      option 骑行远足
+                      option 其他
+            li
+              .item-content
+                .item-inner
+                  .item-title.label 活动地点
+                  .item-input
+                    input(type='text',id='city-picker',value="江西 南昌 新建县",name="activelocaltion")
+            li
+              .item-content
+                .item-inner
+                  font(style="font-size:0.5rem;color:red") 状态图片、信息将展示为活动详情页图片、描述
         textarea.talkabout_textarea(placeholder='今天又运动了',name='mystatus')
         #localImag.row
           .col-33.imgBOX
@@ -159,6 +194,14 @@ block content
             a(href="#" class="button button-big button-fill button-success append_concems") 关注TA
           .col-50
             a(href="#" class="button button-big button-fill button-danger userdetail_back") 返回
+  .popup.active_detail
+    header.bar.bar-nav
+      h1.title 分享你的运动状态
+      span.icon.icon-down.pull-left.close-popup
+      span.icon.icon-menu.pull-right
+    .content
+      .active_picbox
+        ul
   .panel-overlay
   .panel.panel-right.panel-cover.theme-dark(id='panel-right')
     .content-block
