@@ -20,7 +20,7 @@ JQ(function(){
           onClick: function() {
             $('.hiddenform input').val('');
             $('#formFile').submit();
-            
+            $.toast("后台发表中。。");
           }
         },
         {

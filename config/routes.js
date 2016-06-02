@@ -225,31 +225,33 @@ module.exports= function(app){
 							//查询被关注者历史状态
 							Talkabout.findOne({username:req.body.username},function(err,talkabouts){
 								var talkstatus=[];
-								var contents=talkabouts.content;
-								for(var i in contents){
-									var onestatus={
-										username:req.body.username,
-										content:{}
-									}
-									onestatus.content=contents[i];
-									talkstatus.push(onestatus);
-								}
-								Statuslist.findOne({username:req.session.user},function(err,statuslist){
-									var all=statuslist.content;
-									for(var i in talkstatus){
-										all.push(talkstatus[i])
-									}
-									all.sort(function(a,b){
-										if(a.createTime>b.createTime){
-											return 1
-										}else{
-											return -1
+								if(!!talkabouts.content){
+									var contents=talkabouts.content;
+									for(var i in contents){
+										var onestatus={
+											username:req.body.username,
+											content:{}
 										}
-        							});
-        							console.log(all)
-        							statuslist.content=all;
-        							statuslist.save();
-								})
+										onestatus.content=contents[i];
+										talkstatus.push(onestatus);
+									}
+									Statuslist.findOne({username:req.session.user},function(err,statuslist){
+										var all=statuslist.content;
+										for(var i in talkstatus){
+											all.push(talkstatus[i])
+										}
+										all.sort(function(a,b){
+											if(a.createTime>b.createTime){
+												return 1
+											}else{
+												return -1
+											}
+	        							});
+	        							console.log(all)
+	        							statuslist.content=all;
+	        							statuslist.save();
+									})
+								}
 							})
 							
 						});
