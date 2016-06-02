@@ -225,7 +225,8 @@ module.exports= function(app){
 							//查询被关注者历史状态
 							Talkabout.findOne({username:req.body.username},function(err,talkabouts){
 								var talkstatus=[];
-								if(!!talkabouts.content){
+								console.log(talkabouts)
+								if(talkabouts){
 									var contents=talkabouts.content;
 									for(var i in contents){
 										var onestatus={

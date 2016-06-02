@@ -1,7 +1,8 @@
 JQ(function(){
 
-   $('#submittype').click(function(){
-    if($('.hiddenform').css('display')=='block'){
+  $(document).on('click','#submittype', function () {
+    if($('.hiddenform').eq(0).css('display')=='block'){
+      console.log(2)
       if($('.hiddenform input').val()!=''){
         $('#formFile').submit();
         $.closeModal('.append_commit')
@@ -9,6 +10,7 @@ JQ(function(){
         $.toast("发表为活动必须补全信息哦");
       }
     }else{
+      console.log(1)
       var buttons1 = [
         {
           text: '请选择',
