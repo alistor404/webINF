@@ -32,13 +32,13 @@ module.exports= function(app){
 
 		var dict2=dict.sort().join('');
 		var Signture = crypto.createHmac("sha1", dict2).digest().toString('base64');
-		if( Signture==req.query.signture){
+		if( Signture==req.query.signature){
 			res.send(echostr)
 		}else{
 			console.log('dict  '+dict)
 			console.log('dict2   '+dict2)
 			console.log(Signture)
-			console.log(req.query.signture)
+			console.log(req.query.signature)
 		}
 	})
 	//login
