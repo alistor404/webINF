@@ -1,4 +1,4 @@
-var formidable = require('formidable');//表单提交处理
+﻿var formidable = require('formidable');//表单提交处理
 var dir=require('./newdirpath.js')
 var fs=require('fs')
 
@@ -9,18 +9,34 @@ var Talkabout=require("../mongoose_db/Model/talkabout.js")
 var Statuslist=require("../mongoose_db/Model/friendstatuslist.js")
 var Active=require('../mongoose_db/Model/active.js')
 
-
+var crypto=require('crypto');
 
 module.exports= function(app){
 
 	app.use(function(req,res,next){
-		if(!req.session.user && !req.originalUrl.match('/login')){
+		if(!req.session.user && !req.originalUrl.match('/login')  && !req.originalUrl.match('/weixin')){
 			res.redirect('/login')
 		}else{
 			next()
 		}
 	})
 	
+	app.get("/weixin",function(req.res){
+		var timestamp=req.timestamp;
+		var nonce=req.nonce
+		var echostr=req.echostr
+		var token='qaz123';
+		let dict = [nonce,timestamp,token];
+
+		var dict2=dict.sort().join();
+		var Signture = crypto.createHmac("sha1", dict2);
+		if( Signture==req.Signture){
+			res.send(req.echostr)
+		}else{
+			console.log(req)
+			console.log(dict2)
+		}
+	})
 	//login
 	app.get("/login",function(req,res){
 		res.render('pages/login.pug',{
