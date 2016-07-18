@@ -25,10 +25,10 @@ module.exports= function(app){
 		var timestamp=req.timestamp;
 		var nonce=req.nonce
 		var echostr=req.echostr
-		console.log("时间戳"+timestamp+"信息 "+nonce）
+		console.log("时间戳"+timestamp+"信息"+nonce）
 		var token='qaz123';
 		var dict = [nonce,timestamp,token];
-
+s
 		var dict2=dict.sort().join('');
 		var Signture = crypto.createHmac("sha1", dict2);
 		if( Signture==req.Signture){
