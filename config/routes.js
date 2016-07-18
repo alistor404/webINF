@@ -25,7 +25,8 @@ module.exports= function(app){
 		var timestamp=req.timestamp;
 		var nonce=req.nonce
 		var echostr=req.echostr
-		console.log("时间戳"+timestamp+"信息"+nonce）
+		console.log("时间戳"+timestamp)
+		
 		var token='qaz123';
 		var dict = [nonce,timestamp,token];
 s
