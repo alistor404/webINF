@@ -26,15 +26,16 @@ module.exports= function(app){
 		var nonce=req.nonce
 		var echostr=req.echostr
 		console.log("时间戳"+timestamp)
-		
+		console.log("核对码"+req.echostr) 
 		var token='qaz123';
 		var dict = [nonce,timestamp,token];
-s
+
 		var dict2=dict.sort().join('');
 		var Signture = crypto.createHmac("sha1", dict2);
 		if( Signture==req.Signture){
 			res.send(req.echostr)
 		}else{
+			res.send(req.echostr)
 			console.log('dict  '+dict)
 			console.log('dict2   '+dict2)
 			console.log(Signture)
