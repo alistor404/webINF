@@ -33,8 +33,10 @@ module.exports= function(app){
 		if( Signture==req.Signture){
 			res.send(req.echostr)
 		}else{
-			console.log(req)
-			console.log(dict2)
+			console.log('dict  '+dict)
+			console.log('dict2   '+dict2)
+			console.log(Signture)
+			console.log(req.Signture)
 		}
 	})
 	//login
