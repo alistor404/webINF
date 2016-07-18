@@ -31,7 +31,7 @@ module.exports= function(app){
 		var dict = [nonce,timestamp,token];
 
 		var dict2=dict.sort().join('');
-		var Signture = crypto.createHmac("sha1", dict2);
+		var Signture = crypto.createHmac("sha1", dict2).digest().toString('base64');
 		if( Signture==req.query.signture){
 			res.send(echostr)
 		}else{
