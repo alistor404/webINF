@@ -22,24 +22,23 @@ module.exports= function(app){
 	})
 	
 	app.get("/weixin",function(req,res){
-		var timestamp=req.timestamp;
-		var nonce=req.nonce
-		var echostr=req.echostr
+		var timestamp=req.query.timestamp;
+		var nonce=req.query.nonce
+		var echostr=req.query.echostr
 		console.log("时间戳"+timestamp)
-		console.log("核对码"+req.echostr) 
+		console.log("核对码"+echostr) 
 		var token='qaz123';
 		var dict = [nonce,timestamp,token];
 
 		var dict2=dict.sort().join('');
 		var Signture = crypto.createHmac("sha1", dict2);
-		if( Signture==req.Signture){
-			res.send(req.echostr)
+		if( Signture==req.query.signture){
+			res.send(echostr)
 		}else{
-			res.send(req.echostr)
 			console.log('dict  '+dict)
 			console.log('dict2   '+dict2)
 			console.log(Signture)
-			console.log(req.signture)
+			console.log(req.query.signture)
 		}
 	})
 	//login
