@@ -21,12 +21,12 @@ module.exports= function(app){
 		}
 	})
 	
-	app.get("/weixin",function(req.res){
+	app.get("/weixin",function(req,res){
 		var timestamp=req.timestamp;
 		var nonce=req.nonce
 		var echostr=req.echostr
 		var token='qaz123';
-		let dict = [nonce,timestamp,token];
+		var dict = [nonce,timestamp,token];
 
 		var dict2=dict.sort().join();
 		var Signture = crypto.createHmac("sha1", dict2);
