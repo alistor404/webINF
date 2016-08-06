@@ -14,13 +14,18 @@ var crypto=require('crypto');
 module.exports= function(app){
 
 	app.use(function(req,res,next){
-		if(!req.session.user && !req.originalUrl.match('/login')  && !req.originalUrl.match('/weixin')){
+		if(!req.session.user && !req.originalUrl.match('/login')  && !req.originalUrl.match('/weixin') && !req.originalUrl.match('/zhaopin')){
 			res.redirect('/login')
 		}else{
 			next()
 		}
 	})
 	
+
+	app.get('/zhaopin',function(req,res){
+		res.render('pages/zhaopin')
+	})
+
 	app.get("/weixin",function(req,res){
 		var timestamp=req.query.timestamp;
 		var nonce=req.query.nonce

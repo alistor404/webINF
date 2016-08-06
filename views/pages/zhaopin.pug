@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>招聘首页</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="keywords" content="招聘，招聘网，找工作,wap">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta http-equiv="Cache-Control" content="no-siteapp">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<link rel="stylesheet" type="text/css" href="./libs/swiper/swiper.min.css">
+	<script type="text/javascript" src='./libs/vue.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="./css/zhaopin.css">
+</head>
+<body>
+	<div class="header">
+		<div class="localtion">
+			<i class="iconfont">&#58893</i>
+			<font>上海</font>
+		</div>
+		<div class="seacer">
+			<input type='text' placeholder='找工作，找职位'/>
+			<i class="iconfont s_icon">&#58891</i>	
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="content">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<img src='./img-zhaopin/img(1).jpg' />
+				</div>
+				<div class="swiper-slide">
+					<img src='./img-zhaopin/img(2).jpg' />
+				</div>
+				<div class="swiper-slide">
+					<img src='./img-zhaopin/img(3).jpg' />
+				</div>
+				<div class="swiper-slide">
+					<img src='./img-zhaopin/img(4).jpg' />
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+		<div class="cell_nav">
+			<div class="cell_tr">
+				<div>
+					<i class="iconfont" style="color:#cc5454">&#xe605</i>
+					<p>找职业</p>
+				</div>
+				<div>
+					<i class="iconfont" style="color:#1e6f6c">&#xe60c</i>
+					<p>找企业</p>
+				</div>
+				<div>
+					<i class="iconfont" style="color:#804949">&#xe608</i>
+					<p>兼职</p>
+				</div>
+				<div class="last_div">
+					<i class="iconfont" style="color:#232584">&#xe600</i>
+					<p>附近职业</p>
+				</div>
+				<span class="clear"></span>
+			</div>
+			<div class="cell_tr">
+				<div>
+					<i class="iconfont" style="color:#09444e">&#xe607</i>
+					<p>微招聘</p>
+				</div>
+				<div>
+					<i class="iconfont" style="color:#de49a1">&#xe604</i>
+					<p>微简历</p>
+				</div>
+				<div>
+					<i class="iconfont" style="color:#a22020">&#xe60a</i>
+					<p>看资讯</p>
+				</div>
+				<div class="last_div">
+					<i class="iconfont"  style="color:#8a3131">&#xe602</i>
+					<p>招聘会</p>
+				</div>
+				<span class="clear"></span>
+			</div>
+		</div>
+		<div id="tuijian">
+			<div class="tuijain_title">
+				<p>职位推荐</p>
+			</div>
+			<div class="job_card" v-for='todo in todos'>
+				<div class="job_card_header">
+					<p class="job_title">{{todo.title}}</p>
+					<div class="job_mate">
+						<span class="job_money">￥{{todo.money}}</span>
+						<span class="job_localtion"><i class='iconfont'>&#58893</i>{{todo.localtion}}</span>
+						<span class='job_years'><i class='iconfont'>&#xe60c</i>{{todo.years}}年</span>
+						<span class='job_school'><i class='iconfont'>&#xe604</i>{{todo.school}}</span>
+					</div>
+				</div>
+				<div class="job_card_content">
+					<div class="job_img_box">
+						<img v-bind:src="todo.img"/>
+					</div>
+					<div class="job_qiye">
+						<p>{{todo.qiyemsg1}}</p>
+						<p>公司规模{{todo.qiyemsg2}}人</p>
+					</div>
+				</div>
+				<div class="job_card_footer">
+					<p>最近回复：{{todo.date}}前</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="nav">
+		<div class="nav_li">
+			<i class="iconfont">&#xe60c</i>
+			<p>首页</p>
+		</div>
+		<div class="nav_li">
+			<i class="iconfont">&#xe603</i>
+			<p>找工作</p>
+		</div>
+		<div class="nav_li">
+			<i class="iconfont">&#xe607</i>
+			<p>找人才</p>
+		</div>
+		<div class="nav_li">
+			<i class="iconfont">&#xe609</i>
+			<p>我的</p>
+		</div>
+	</div>
+	<script type="text/javascript" src='./libs/swiper/swiper.min.js'></script>
+	<script type="text/javascript" src='./js/zhaopin.js'></script>
+</body>
+</html>
